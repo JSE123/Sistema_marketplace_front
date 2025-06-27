@@ -1,0 +1,111 @@
+<app-haeder></app-haeder>
+<div class="home-container">
+    <!-- Hero Banner -->
+    <section class="hero-banner">
+      <div class="hero-content">
+        <h1>Encuentra lo que necesitas en nuestro Marketplace</h1>
+        <p>Miles de productos y servicios a tu disposición</p>
+        <div class="search-bar">
+          <input [(ngModel)]="searchTerm" type="text" placeholder="Buscar productos, categorías...">
+          <button class="search-button" routerLink="/products" [queryParams]="{ q: searchTerm }">
+            <i class="material-icons">search</i>
+          </button>
+        </div>
+      </div>
+    </section>
+  
+    <!-- Categorías destacadas -->
+    <section class="featured-categories" id="categories-section">
+      <h2 class="section-title">Explora por categoría</h2>
+      <div class="categories-grid">
+        <div class="category-card" *ngFor="let category of categories" [routerLink]="['/products']" [queryParams]="{ category: category.id }">
+          <div class="category-icon">
+            <img [src]="getCategoryImage(category.name)" [alt]="category.name">
+          </div>
+          <h3>{{category.name}}</h3>
+        </div>
+      </div>
+    </section>
+  
+    <!-- Productos destacados -->
+    <section class="featured-products">
+      <div class="section-header">
+        <h2 class="section-title">Productos destacados</h2>
+        <a routerLink="/products" class="view-all">Ver todos</a>
+      </div>
+      <div class="products-grid">
+        <div class="product-card"  *ngFor="let product of listaProductos">
+          <!-- <div class="product-badge" *ngIf="product.discount">-{{product.discount}}%</div> -->
+          <div class="product-image" >
+            <img [src]="product.imageUrls[0]" [alt]="product.title">
+            <div class="product-actions">
+              <button class="action-btn wishlist">
+                <i class="material-icons">favorite_border</i>
+              </button>
+              <button class="action-btn cart">
+                <i class="material-icons">add_shopping_cart</i>
+              </button>
+            </div>
+          </div>
+          <div class="product-info" (click)="goToProductDetails(product.id)" >
+           
+            <h3 class="product-title" >{{product.title}}</h3>
+            <div class="product-price">
+              <span class="current-price">{{product.price | currency}}</span>
+              <!-- <span class="original-price" *ngIf="product.originalPrice">{{product.originalPrice | currency}}</span> -->
+            </div>
+            <div class="product-rating">
+              <div class="stars">
+                <i class="material-icons" *ngFor="let star of [1,2,3,4,5]">
+                  <!-- {{star <= product.rating ? 'star' : 'star_border'}} -->
+                </i>
+              </div>
+              <!-- <span class="rating-count">({{product.reviews}})</span> -->
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+  
+    <!-- Banner promocional -->
+    <section class="promo-banner">
+      <div class="promo-content">
+        <h2>Ofertas especiales esta semana</h2>
+        <p>Hasta 50% de descuento en seleccionados</p>
+        <button class="promo-button">Ver ofertas</button>
+      </div>
+    </section>
+  
+    <!-- Vendedores destacados -->
+    <section class="featured-sellers">
+      <h2 class="section-title">Vendedores destacados</h2>
+      <div class="sellers-grid">
+        <div class="seller-card" *ngFor="let seller of featuredSellers">
+          <div class="seller-avatar">
+            <img [src]="seller.avatar" [alt]="seller.name">
+          </div>
+          <div class="seller-info">
+            <h3>{{seller.name}}</h3>
+            <div class="seller-rating">
+              <i class="material-icons">star</i>
+              <span>{{seller.rating}}</span>
+            </div>
+            <p class="seller-category">{{seller.category}}</p>
+          </div>
+          <button class="follow-button">Seguir</button>
+        </div>
+      </div>
+    </section>
+  
+    <!-- CTA Newsletter -->
+    <section class="newsletter">
+      <div class="newsletter-content">
+        <h2>Suscríbete a nuestro boletín</h2>
+        <p>Recibe ofertas exclusivas y novedades directamente en tu correo</p>
+        <div class="newsletter-form">
+          <input type="email" placeholder="Tu correo electrónico">
+          <button type="submit">Suscribirse</button>
+        </div>
+      </div>
+    </section>
+  </div>

@@ -1,0 +1,316 @@
+/* Variables */
+$primary-color: #4361ee;
+$accent-color: #3f37c9;
+$light-color: #f8f9fa;
+$dark-color: #212529;
+$border-radius: 8px;
+$box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+
+/* Header principal */
+.marketplace-header {
+  background-color: white;
+  box-shadow: $box-shadow;
+  position: sticky;
+  top: 0;
+  z-index: 1000;
+  padding: 0.5rem 0;
+
+  .header-container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    max-width: 1440px;
+    margin: 0 auto;
+    padding: 0 1.5rem;
+  }
+}
+
+/* Sección izquierda (Logo + Búsqueda) */
+.header-left {
+  display: flex;
+  align-items: center;
+  gap: 1.5rem;
+  flex: 1;
+
+  .logo-link {
+    display: flex;
+    align-items: center;
+    text-decoration: none;
+    
+    .logo {
+      height: 40px;
+    }
+    
+    .brand-name {
+      font-size: 1.5rem;
+      font-weight: 700;
+      color: $primary-color;
+      margin-left: 0.5rem;
+    }
+  }
+
+  .search-bar {
+    display: flex;
+    width: 100%;
+    max-width: 500px;
+
+    input {
+      flex: 1;
+      padding: 0.75rem 1rem;
+      border: 1px solid #ddd;
+      border-radius: $border-radius 0 0 $border-radius;
+      font-size: 0.95rem;
+
+      &:focus {
+        outline: none;
+        border-color: $primary-color;
+      }
+    }
+
+    .search-button {
+      background: $primary-color;
+      color: white;
+      border: none;
+      padding: 0 1.25rem;
+      border-radius: 0 $border-radius $border-radius 0;
+      cursor: pointer;
+      transition: all 0.3s ease;
+
+      &:hover {
+        background: $accent-color;
+      }
+    }
+  }
+}
+
+/* Navegación central */
+.header-center {
+  .nav-list {
+    display: flex;
+    list-style: none;
+    gap: 1rem;
+    margin: 0;
+    padding: 0;
+  }
+
+  .nav-item {
+    .nav-link {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      padding: 0.75rem 1rem;
+      text-decoration: none;
+      color: $dark-color;
+      border-radius: $border-radius;
+      transition: all 0.3s ease;
+
+      &:hover {
+        background-color: rgba($primary-color, 0.1);
+        color: $primary-color;
+      }
+
+      &.highlight {
+        background-color: $primary-color;
+        color: white;
+
+        &:hover {
+          background-color: $accent-color;
+        }
+      }
+    }
+  }
+}
+
+/* Sección derecha (Usuario + Notificaciones) */
+.header-right {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  flex: 1;
+  justify-content: flex-end;
+
+  .user-menu {
+    position: relative;
+
+    .user-button {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      background: none;
+      border: none;
+      cursor: pointer;
+      padding: 0.5rem;
+      border-radius: $border-radius;
+      transition: all 0.3s ease;
+
+      &:hover {
+        background-color: rgba($primary-color, 0.1);
+      }
+
+      .user-avatar {
+        width: 36px;
+        height: 36px;
+        border-radius: 50%;
+        object-fit: cover;
+      }
+
+      .user-name {
+        font-weight: 500;
+      }
+    }
+
+    .dropdown-menu {
+      position: absolute;
+      right: 0;
+      top: 100%;
+      background: white;
+      border-radius: $border-radius;
+      box-shadow: $box-shadow;
+      min-width: 200px;
+      padding: 0.5rem 0;
+      opacity: 0;
+      visibility: hidden;
+      transform: translateY(10px);
+      transition: all 0.3s ease;
+      z-index: 100;
+
+      &.show {
+        opacity: 1;
+        visibility: visible;
+        transform: translateY(0);
+      }
+
+      .dropdown-item {
+        display: flex;
+        align-items: center;
+        gap: 0.75rem;
+        padding: 0.75rem 1.5rem;
+        text-decoration: none;
+        color: $dark-color;
+        transition: all 0.2s ease;
+
+        &:hover {
+          background-color: rgba($primary-color, 0.1);
+          color: $primary-color;
+        }
+      }
+
+      .dropdown-divider {
+        height: 1px;
+        background-color: #eee;
+        margin: 0.5rem 0;
+      }
+    }
+  }
+
+  .notification-button {
+    position: relative;
+    background: none;
+    border: none;
+    cursor: pointer;
+    padding: 0.5rem;
+    border-radius: 50%;
+    transition: all 0.3s ease;
+
+    &:hover {
+      background-color: rgba($primary-color, 0.1);
+    }
+
+    .notification-badge {
+      position: absolute;
+      top: 0;
+      right: 0;
+      background: $accent-color;
+      color: white;
+      font-size: 0.7rem;
+      width: 18px;
+      height: 18px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+  }
+}
+
+/* Responsive */
+@media (max-width: 1024px) {
+  .header-center {
+    .nav-item:not(#nav-item-3) { 
+      display: none;
+    }
+    // Ajustes específicos para el botón Publicar
+    #nav-item-3 {
+      position: absolute;
+      right: 200px; // Ajusta según necesidad
+      top: 50%;
+      transform: translateY(-50%);
+      
+      .nav-link {
+        span {
+          display: none; // Ocultar texto en móvil
+        }
+        
+      }
+    }
+  }
+}
+@media (max-width: 796px) {
+// @media (max-width: 768px) {
+  .header-left {
+    .brand-name {
+      display: none;
+    }
+    
+    .search-bar {
+      max-width: 200px;
+    }
+  }
+}
+
+@media (max-width: 688px) {
+// @media (max-width: 576px) {
+  .header-container {
+    padding: 0 1rem;
+  }
+  
+  .header-left {
+    .search-bar {
+      display: none;
+    }
+  }
+}
+
+/* Botones de autenticación */
+.auth-buttons {
+  display: flex;
+  gap: 0.75rem;
+  align-items: center;
+
+  .auth-button {
+    padding: 0.5rem 1rem;
+    border-radius: $border-radius;
+    text-decoration: none;
+    font-weight: 500;
+    transition: all 0.3s ease;
+    font-size: 0.9rem;
+  }
+
+  .login-button {
+    border: 1px solid $primary-color;
+    color: $primary-color;
+
+    &:hover {
+      background-color: rgba($primary-color, 0.1);
+    }
+  }
+
+  .register-button {
+    background-color: $primary-color;
+    color: white;
+
+    &:hover {
+      background-color: $accent-color;
+    }
+  }
+}

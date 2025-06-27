@@ -1,0 +1,108 @@
+<app-haeder></app-haeder>
+
+<div class="product-details-page">
+  <!-- <div class="breadcrumb">
+    <a routerLink="/">Inicio</a> > <a [routerLink]="['/category', product.category.id]">{{product.category.name}}</a> > <span>{{product.name}}</span>
+  </div> -->
+
+  <div class="product-container">
+    <div class="product-gallery">
+      <div class="main-image">
+        <img [src]="selectedImage || product!.imageUrls[0]" [alt]="product?.title">
+      </div>
+      <div class="thumbnail-container">
+        <div 
+          *ngFor="let image of product?.imageUrls" 
+          class="thumbnail"
+          [class.active]="selectedImage === image"
+          (click)="selectedImage = image">
+          <img [src]="image" [alt]="product?.title">
+        </div>
+      </div>
+    </div>
+
+    <div class="product-info">
+      <h1 class="product-title">{{product?.title}}</h1>
+      
+      <div class="product-meta">
+        <div class="rating">
+          <span class="stars">★★★★☆</span>
+          <!-- <span class="review-count">{{product.reviewCount}} reseñas</span> -->
+        </div>
+        <!-- <div class="sku">SKU: {{product.sku}}</div> -->
+        <div class="availability" [class.in-stock]="product.stock > 0" [class.out-of-stock]="product.stock <= 0">
+          {{product.stock > 0 ? 'En stock' : 'Agotado'}}
+        </div>
+      </div>
+
+      <div class="product-price">
+        <span class="current">{{product?.price | currency}}</span>
+        <!-- <span class="original" *ngIf="product.originalPrice">{{product.originalPrice | currency}}</span>
+        <span class="discount" *ngIf="product.discount">Ahorras {{product.discount}}%</span> -->
+      </div>
+
+      <div class="product-description">
+        <h3>Descripción</h3>
+        <p>{{product?.description}}</p>
+      </div>
+
+      <div class="product-actions">
+        <div class="quantity-selector">
+          <label for="quantity">Cantidad:</label>
+          <input type="number" id="quantity" [(ngModel)]="quantity" min="1" [max]="product?.stock" />
+        </div>
+        
+        <!-- <button class="btn add-to-cart" (click)="addToCart(product, quantity)" [disabled]="product?.stock <= 0">
+          Añadir al carrito
+        </button> -->
+        
+        <button class="btn buy-now" (click)="buyNow(product, quantity)" [disabled]="product?.stock <= 0">
+          Comprar ahora
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <div class="related-products">
+    <h2>Productos relacionados</h2>
+    <div class="products-grid">
+      <!-- <app-product-card 
+        *ngFor="let product of relatedProducts" 
+        [product]="product"
+        (click)="viewProductDetails(product.id)"> -->
+
+      <!-- </app-product-card> -->
+      <div class="product-card"  *ngFor="let product of relatedProducts">
+        <!-- <div class="product-badge" *ngIf="product.discount">-{{product.discount}}%</div> -->
+        <div class="product-image" >
+          <img [src]="product.imageUrls[0]" [alt]="product.title">
+          <div class="product-actions">
+            <button class="action-btn wishlist">
+              <i class="material-icons">favorite_border</i>
+            </button>
+            <button class="action-btn cart">
+              <i class="material-icons">add_shopping_cart</i>
+            </button>
+          </div>
+        </div>
+        <div class="product-info" (click)="goToProductDetails(product.id)" >
+          
+          <h3 class="product-title" >{{product.title}}</h3>
+          <div class="product-price">
+            <span class="current-price">{{product.price | currency}}</span>
+            <!-- <span class="original-price" *ngIf="product.originalPrice">{{product.originalPrice | currency}}</span> -->
+          </div>
+          <div class="product-rating">
+            <div class="stars">
+              <i class="material-icons" *ngFor="let star of [1,2,3,4,5]">
+                <!-- {{star <= product.rating ? 'star' : 'star_border'}} -->
+              </i>
+            </div>
+            <!-- <span class="rating-count">({{product.reviews}})</span> -->
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</div>

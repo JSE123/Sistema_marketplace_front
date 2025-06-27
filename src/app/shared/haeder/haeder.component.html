@@ -1,0 +1,105 @@
+<header class="marketplace-header">
+    <div class="header-container">
+      <!-- Logo y búsqueda -->
+      <div class="header-left">
+        <a routerLink="/" class="logo-link">
+          <img src="images/logo_marketplace.jpg" alt="Marketplace Logo" class="logo">
+          <span class="brand-name">MarketPro</span>
+        </a>
+        
+        <div class="search-bar">
+          <input [(ngModel)]="searchTerm" type="text" placeholder="Buscar productos...">
+          <button class="search-button" routerLink="/products" [queryParams]="{ q: searchTerm }">
+            <i class="material-icons">search</i>
+          </button>
+        </div>
+
+      </div>
+
+      <!-- Navegación principal -->
+      <nav class="header-center">
+        <ul class="nav-list">
+          <li class="nav-item" id="nav-item-1">
+            <a routerLink="/products" class="nav-link">
+              <i class="material-icons">storefront</i>
+              <span>Productos</span>
+            </a>
+            
+          </li>
+          <li *ngIf="isUser || !isAuthenticated" class="nav-item" id="nav-item-2">
+            <a routerLink="" (click)="scrollToCategories()"  class="nav-link">
+              <i class="material-icons">category</i>
+              <span>Categorías</span>
+            </a>
+          <li *ngIf="isAdmin" class="nav-item" id="nav-item-2">
+            <a routerLink="/category"  class="nav-link">
+              <i class="material-icons">category</i>
+              <span>Categorías</span>
+            </a>
+          </li>
+          <li class="nav-item" id="nav-item-3" *ngIf="isAuthenticated && isUser">
+            <a routerLink="/post" class="nav-link highlight">
+              <i class="material-icons">add_circle</i>
+              <span>Publicar</span>
+            </a>
+          </li>
+        </ul>
+      </nav>
+  
+      <!-- Acciones de usuario -->
+      <div class="header-right" >
+        <div class="user-menu" *ngIf="isAuthenticated; else loginSection">
+          <button class="user-button" (click)="toggleUserMenu()">
+            <img [src]="userAvatar" alt="User" class="user-avatar">
+            <span class="user-name">{{currentUser}}</span>
+            <i class="material-icons">arrow_drop_down</i>
+          </button>
+          
+          <div class="dropdown-menu" [class.show]="showUserMenu">
+            <a routerLink="/profile" class="dropdown-item">
+              <i class="material-icons">person</i>
+              <span>Mi perfil</span>
+            </a>
+            <a *ngIf="isUser" routerLink="/my-products" class="dropdown-item">
+              <i class="material-icons">inventory</i>
+              <span>Mis productos</span>
+            </a>
+            <a *ngIf="isUser" routerLink="/messages" class="dropdown-item">
+              <i class="material-icons">chat</i>
+              <span>Mensajes</span>
+            </a>
+            <a *ngIf="isAdmin" routerLink="/category" class="dropdown-item">
+              <i class="material-icons">category</i>
+              <span>Administrar categorias</span>
+            </a>
+            <a *ngIf="isAdmin" routerLink="/users" class="dropdown-item">
+              <i class="material-icons">recent_actors</i>
+              <span>Administrar usuarios</span>
+            </a>
+            <div class="dropdown-divider"></div>
+            <a href="" (click)="logout()" class="dropdown-item">
+              <i class="material-icons">logout</i>
+              <span>Cerrar sesión</span>
+            </a>
+          </div>
+        </div>
+        
+        <button class="notification-button" *ngIf="isAuthenticated">
+          <i class="material-icons">notifications</i>
+          <span class="notification-badge">3</span>
+        </button>
+
+         <!-- Estado cuando el usuario NO está autenticado -->
+        <ng-template #loginSection>
+          <div class="auth-buttons">
+            <a routerLink="/login" class="auth-button login-button">
+              Iniciar sesión
+            </a>
+            <a routerLink="/sign-up" class="auth-button register-button">
+              Registrarse
+            </a>
+          </div>
+        </ng-template>
+      </div>
+    </div>
+  </header>

@@ -1,0 +1,125 @@
+<app-haeder></app-haeder>
+<mat-card class="admin-card">
+  <mat-card-header class="app-header">
+    <mat-card-title>Administración de Categorías</mat-card-title>
+    <mat-card-actions>
+      <button mat-raised-button color="primary" (click)="openModal()">
+        <mat-icon>add</mat-icon> Nueva Categoría
+      </button>
+    </mat-card-actions>
+  </mat-card-header>  
+
+  <mat-card-content>
+    <!-- Barra de búsqueda -->
+    <div class="search-container">
+      <mat-form-field appearance="outline" class="full-width">
+        <mat-label>Buscar categorías</mat-label>
+        <input matInput 
+              [(ngModel)]="searchQuery"
+              (ngModelChange)="applyFilters()"
+              placeholder="Escribe para buscar...">
+        <mat-icon matSuffix>search</mat-icon>
+      </mat-form-field>
+    </div>
+
+    <!-- Lista de categorías
+    <mat-list>
+        <table *ngIf="filteredCategories.length > 0" class="mat-elevation-z8 full-width-table">
+            <th>Numero</th>
+            <th>Nombre</th>
+            <th>Acciones</th>
+            <tr *ngFor="let category of filteredCategories; let i = index">
+                <td>{{i + 1}}</td>
+                <td>{{category.name}}</td>
+                <td>
+                    <button mat-icon-button color="primary" (click)="openModal(category)">
+                        <mat-icon>edit</mat-icon>
+                    </button>
+                    <button mat-icon-button color="warn" (click)="deleteCategoria(category.id)">
+                        <mat-icon>delete</mat-icon>
+                    </button>
+    
+                </td>
+            </tr>
+        </table>
+        <mat-list-item *ngIf="categorias.length === 0">
+           <span>No se encontraron categorías</span>
+           <mat-divider></mat-divider>
+        </mat-list-item>
+    </mat-list> -->
+
+    <div class="mat-elevation-z8">
+      <table mat-table [dataSource]="dataSource" class="full-width-table">
+        <!-- Columna Número -->
+        <ng-container matColumnDef="number">
+          <th mat-header-cell *matHeaderCellDef> No. </th>
+          <td mat-cell *matCellDef="let element; let i = index"> {{i + 1}} </td>
+        </ng-container>
+
+        <!-- Columna Nombre -->
+        <ng-container matColumnDef="name">
+          <th mat-header-cell *matHeaderCellDef> Nombre </th>
+          <td mat-cell *matCellDef="let element"> {{element.name  || 'N/a'}} </td>
+        </ng-container>
+
+       
+        <!-- Columna Acciones -->
+        <ng-container matColumnDef="actions">
+          <th mat-header-cell *matHeaderCellDef> Acciones </th>
+          <td mat-cell *matCellDef="let element">
+            <button mat-icon-button color="primary" (click)="openModal(element)">
+              <mat-icon>more</mat-icon>
+            </button>
+            <button mat-icon-button color="warn" (click)="deleteCategoria(category.id)">
+              <mat-icon>delete</mat-icon>
+            </button>
+          </td>
+        </ng-container>
+
+        <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+        <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+      </table>
+
+      <mat-paginator [pageSizeOptions]="pageSizeOptions" 
+                    showFirstLastButtons
+                    aria-label="Seleccionar página de usuarios">
+      </mat-paginator>
+
+      <div *ngIf="dataSource.filteredData.length === 0" class="no-results">
+        <mat-icon>search_off</mat-icon>
+        <span>No se encontraron usuarios</span>
+      </div>
+    </div>
+
+    
+  </mat-card-content>
+</mat-card>
+
+<!-- Modal integrado en el mismo componente -->
+@if (isModalOpen) {
+  <div class="modal-overlay">
+    <div class="modal-container">
+      <h2>{{currentCategoria ? 'Editar' : 'Nueva'}} Categoría</h2>
+      
+      <form [formGroup]="categoriaForm" (ngSubmit)="saveCategoria()">
+        <mat-form-field appearance="outline" class="full-width">
+          <mat-label>Nombre</mat-label>
+          <input matInput class="imput-category-name"  formControlName="name" required>
+          @if (categoriaForm.get('nombre')?.hasError('required')) {
+            <mat-error>El nombre es requerido</mat-error>
+          }
+        </mat-form-field>
+        
+        <div class="modal-actions">
+          <button mat-button type="button" (click)="closeModal()">Cancelar</button>
+          <button mat-raised-button 
+                  color="primary" 
+                  type="submit"
+                  [disabled]="categoriaForm.invalid">
+            Guardar
+          </button>
+        </div>
+      </form>
+    </div>
+  </div>
+}

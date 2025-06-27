@@ -1,0 +1,233 @@
+<app-haeder></app-haeder>
+<div class="product-form-container">
+    <h2>{{ editing ? 'Editar Producto' : 'Publicar Nuevo Producto' }}</h2>
+    
+    <form [formGroup]="productForm" (ngSubmit)="onSubmit()" class="product-form">
+      <!-- Sección 1: Información Básica -->
+      <div class="form-section">
+        <h3>Información del Producto</h3>
+        
+        <div class="form-group">
+          <label for="title">Título del producto *</label>
+          <input 
+            type="text" 
+            id="title" 
+            formControlName="title" 
+            placeholder="Ej: iPhone 13 Pro Max 256GB"
+            [(ngModel)]="productRequest.title"
+            [ngClass]="{ 'is-invalid': submitted && f['title'].errors }">
+          <div *ngIf="submitted && f['title'].errors" class="invalid-feedback">
+            <div *ngIf="f['title'].errors['required']">El título es requerido</div>
+            <div *ngIf="f['title'].errors['minlength']">Mínimo 10 caracteres</div>
+          </div>
+        </div>
+        <div class="form-group">
+          <label for="description">Descripción detallada *</label>
+          <textarea 
+            id="description" 
+            formControlName="description" 
+            rows="5"
+            placeholder="Describe tu producto con detalles..."
+            [(ngModel)]="productRequest.description"
+            [ngClass]="{ 'is-invalid': submitted && f['description'].errors }"></textarea>
+          <div *ngIf="submitted && f['description'].errors" class="invalid-feedback">
+            <div *ngIf="f['description'].errors['required']">La descripción es requerida</div>
+            <div *ngIf="f['description'].errors['minlength']">Mínimo 30 caracteres</div>
+          </div>
+        </div>
+  
+        <div class="form-row">
+          <div class="form-group">
+            <label for="condition">Estado del producto *</label>
+            <select 
+              id="condition" 
+              [(ngModel)]="productRequest.status"
+                formControlName="condition"
+              [ngClass]="{ 'is-invalid': submitted && f['condition'].errors }">
+              <option value="" disabled selected>Selecciona una opción</option>
+              <option *ngFor="let cond of productConditions" [value]="cond">
+                {{ cond }}
+              </option>
+            </select>
+            <div *ngIf="submitted && f['condition'].errors" class="invalid-feedback">
+              Debes seleccionar el estado del producto
+            </div>
+          </div>
+  
+          <div class="form-group">
+            <label for="category">Categoría *</label>
+            <select 
+              id="category" 
+              formControlName="categoryId"
+              [(ngModel)]="productRequest.categoryId"
+              [ngClass]="{ 'is-invalid': submitted && f['categoryId'].errors }">
+              <option value="" disabled selected>Selecciona una categoría</option>
+              <option *ngFor="let cat of categories" [value]="cat.id">
+                {{ cat.name }}
+              </option>
+            </select>
+            <div *ngIf="submitted && f['categoryId'].errors" class="invalid-feedback">
+              Debes seleccionar una categoría
+            </div>
+          </div>
+        </div>
+      </div>
+  
+      <!-- Sección 2: Precio -->
+      <div class="form-section">
+        <h3>Precio</h3>
+        
+        <div class="form-group">
+          <label for="price">Precio (USD) *</label>
+          <div class="price-input">
+            <span class="currency-symbol">$</span>
+         
+            <input 
+              type="number" 
+              id="price" 
+              formControlName="price" 
+              min="0"
+              step="0.01"
+              placeholder="0.00"
+              [(ngModel)]="productRequest.price"
+              [ngClass]="{ 'is-invalid': submitted && f['price'].errors }">
+          </div>
+          <div *ngIf="submitted && f['price'].errors" class="invalid-feedback">
+            <div *ngIf="f['price'].errors['required']">El precio es requerido</div>
+            <div *ngIf="f['price'].errors['min']">El precio mínimo es $0.50</div>
+          </div>
+        </div>
+  
+        <div class="form-group">
+          <label class="checkbox-label">
+            <input type="checkbox" formControlName="priceNegotiable">
+            <span>Precio negociable</span>
+          </label>
+        </div>
+      </div>
+
+      <!-- stock -->
+      <div class="form-section">
+        <h3>Stock</h3>
+        
+        <div class="form-group">
+          <label for="price">Stock *</label>
+          <div class="price-input">
+            <!-- <span class="currency-symbol">$</span> -->
+         
+            <input 
+              type="number" 
+              id="stock" 
+              formControlName="stock" 
+              min="1"
+              step="1"
+              placeholder="0"
+              [(ngModel)]="productRequest.stock"
+              [ngClass]="{ 'is-invalid': submitted && f['stock'].errors }">
+          </div>
+          <div *ngIf="submitted && f['stock'].errors" class="invalid-feedback">
+            <div *ngIf="f['stock'].errors['required']">El stock es requerido</div>
+          </div>
+        </div>
+      </div>
+  
+      <!-- Sección 3: Ubicación -->
+      <div class="form-section">
+        <h3>Ubicación</h3>
+        
+        <div class="form-row">
+          <!-- <div class="form-group">
+            <label for="state">Estado/Provincia *</label>
+            <select 
+              id="state" 
+              formControlName="state"
+              (change)="onStateChange()"
+              [ngClass]="{ 'is-invalid': submitted && f['state'].errors }">
+              <option value="" disabled selected>Selecciona un estado</option>
+              <option *ngFor="let ciudad of ciudades" [value]="ciudad.id">
+                {{ ciudad.name }}
+              </option>
+            </select>
+            <div *ngIf="submitted && f['state'].errors" class="invalid-feedback">
+              Debes seleccionar un estado
+            </div>
+          </div> -->
+  
+          <!-- <div class="form-group">
+            <label for="city">Ciudad *</label>
+            <select 
+              id="city" 
+              formControlName="city"
+              [disabled]="!f['state'].value"
+              [ngClass]="{ 'is-invalid': submitted && f['city'].errors }">
+              <option value="" disabled selected>Selecciona una ciudad</option>
+              <option *ngFor="let city of cities" [value]="city.id">
+                {{ city.name }}
+              </option>
+            </select>
+            <div *ngIf="submitted && f['city'].errors" class="invalid-feedback">
+              Debes seleccionar una ciudad
+            </div>
+          </div> -->
+        </div>
+  
+        <div class="form-group">
+          <label for="locationDetails">Detalles de ubicación (opcional)</label>
+          <input 
+            type="text" 
+            id="locationDetails" 
+            formControlName="locationDetails" 
+            placeholder="Ej: Centro comercial Las Américas, local 24">
+        </div>
+      </div>
+  
+      <!-- Sección 4: Imágenes -->
+      <div class="form-section">
+        <h3>Imágenes del producto *</h3>
+        <p class="section-description">Sube al menos 1 imagen (máximo 8). La primera imagen será la principal.</p>
+        
+        <div class="image-upload-container">
+          <div class="image-upload-box" (click)="fileInput.click()" *ngIf="images.length < 8">
+            <input 
+              type="file" 
+              #fileInput 
+              (change)="onFileSelected($event)" 
+              accept="image/*" 
+              multiple
+              style="display: none;">
+            <i class="material-icons">add_photo_alternate</i>
+            <p>Haz clic para agregar imágenes</p>
+          </div>
+        
+          <div class="image-preview-container">
+            <div class="image-preview" *ngFor="let img of images; let i = index">
+              <img [src]="img.url" [alt]="'Imagen del producto ' + (i + 1)">
+              <button type="button" class="remove-image" (click)="removeImage(i)">
+                <i class="material-icons">close</i>
+              </button>
+              <div class="image-main-badge" *ngIf="i === 0">Principal</div>
+              <button 
+                type="button" 
+                class="move-image-up" 
+                *ngIf="i > 0"
+                (click)="moveImageUp(i)">
+                <i class="material-icons">arrow_upward</i>
+              </button>
+            </div>
+          </div>
+        </div>
+  
+        <div *ngIf="submitted && images.length === 0 && !editing" class="invalid-feedback">
+          Debes subir al menos una imagen del producto
+        </div>
+      </div>
+  
+      <!-- Botón de enviar -->
+      <div class="form-actions">
+        <button type="submit" class="submit-button" [disabled]="loading">
+          <span *ngIf="!loading">{{ editing ? 'Actualizar Producto' : 'Publicar Producto' }}</span>
+          <span *ngIf="loading" class="spinner"></span>
+        </button>
+      </div>
+    </form>
+  </div>

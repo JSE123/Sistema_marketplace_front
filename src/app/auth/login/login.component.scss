@@ -1,0 +1,330 @@
+// @import '~@angular/material/theming';
+@use '@angular/material' as mat;
+@import 'https://fonts.googleapis.com/icon?family=Material+Icons';
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap');
+
+// Variables
+$primary-color: #4361ee;
+$secondary-color: #3f37c9;
+$error-color: #f72585;
+$success-color: #4cc9f0;
+$light-color: #f8f9fa;
+$dark-color: #212529;
+$border-radius: 8px;
+$box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+$transition: all 0.3s ease;
+
+// Mixins
+@mixin flex-center {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.login-container {
+  display: flex;
+  min-height: 100vh;
+  font-family: 'Poppins', sans-serif;
+
+  .login-card {
+    flex: 1;
+    max-width: 500px;
+    padding: 2rem;
+    @include flex-center();
+    flex-direction: column;
+    background-color: white;
+
+    .login-brand {
+      text-align: center;
+      margin-bottom: 2rem;
+
+      .logo {
+        height: 60px;
+        margin-bottom: 1rem;
+      }
+
+      h1 {
+        font-size: 1.8rem;
+        font-weight: 600;
+        color: $dark-color;
+        margin-bottom: 0.5rem;
+      }
+
+      p {
+        color: lighten($dark-color, 30%);
+        font-size: 0.9rem;
+      }
+    }
+
+    .login-form {
+      width: 100%;
+
+      .form-group {
+        margin-bottom: 1.5rem;
+
+        label {
+          display: block;
+          margin-bottom: 0.5rem;
+          font-weight: 500;
+          color: $dark-color;
+          font-size: 0.9rem;
+        }
+
+        input {
+          width: 100%;
+          padding: 0.75rem 1rem;
+          border: 1px solid #ddd;
+          border-radius: $border-radius;
+          font-size: 0.95rem;
+          transition: $transition;
+
+          &:focus {
+            border-color: $primary-color;
+            box-shadow: 0 0 0 2px rgba($primary-color, 0.2);
+            outline: none;
+          }
+
+          &.is-invalid {
+            border-color: $error-color;
+
+            &:focus {
+              box-shadow: 0 0 0 2px rgba($error-color, 0.2);
+            }
+          }
+        }
+
+        .password-input {
+          position: relative;
+
+          .toggle-password {
+            position: absolute;
+            right: 10px;
+            top: 50%;
+            transform: translateY(-50%);
+            background: none;
+            border: none;
+            color: lighten($dark-color, 40%);
+            cursor: pointer;
+            padding: 5px;
+            @include flex-center();
+
+            &:hover {
+              color: $dark-color;
+            }
+          }
+        }
+
+        .invalid-feedback {
+          color: $error-color;
+          font-size: 0.8rem;
+          margin-top: 0.25rem;
+        }
+      }
+
+      .form-options {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 1.5rem;
+        font-size: 0.9rem;
+
+        .remember-me {
+          display: flex;
+          align-items: center;
+
+          input {
+            margin-right: 0.5rem;
+          }
+        }
+
+        .forgot-password {
+          color: $primary-color;
+          text-decoration: none;
+          transition: $transition;
+
+          &:hover {
+            color: $secondary-color;
+            text-decoration: underline;
+          }
+        }
+      }
+
+      .login-button {
+        width: 100%;
+        padding: 0.75rem;
+        background-color: $primary-color;
+        color: white;
+        border: none;
+        border-radius: $border-radius;
+        font-size: 1rem;
+        font-weight: 500;
+        cursor: pointer;
+        transition: $transition;
+        margin-bottom: 1.5rem;
+        @include flex-center();
+
+        &:hover {
+          background-color: $secondary-color;
+        }
+
+        &:disabled {
+          background-color: lighten($primary-color, 20%);
+          cursor: not-allowed;
+        }
+
+        .spinner {
+          width: 20px;
+          height: 20px;
+          border: 3px solid rgba(255, 255, 255, 0.3);
+          border-radius: 50%;
+          border-top-color: white;
+          animation: spin 1s ease-in-out infinite;
+        }
+      }
+
+      .social-login {
+        text-align: center;
+        margin-bottom: 1.5rem;
+
+        p {
+          color: lighten($dark-color, 30%);
+          font-size: 0.9rem;
+          margin-bottom: 1rem;
+          position: relative;
+
+          &::before, &::after {
+            content: "";
+            position: absolute;
+            top: 50%;
+            width: 30%;
+            height: 1px;
+            background-color: #ddd;
+          }
+
+          &::before {
+            left: 0;
+          }
+
+          &::after {
+            right: 0;
+          }
+        }
+
+        .social-buttons {
+          display: flex;
+          gap: 1rem;
+          justify-content: center;
+
+          .social-button {
+            flex: 1;
+            max-width: 150px;
+            padding: 0.5rem;
+            border: 1px solid #ddd;
+            border-radius: $border-radius;
+            background-color: white;
+            font-size: 0.85rem;
+            cursor: pointer;
+            transition: $transition;
+            @include flex-center();
+            gap: 0.5rem;
+
+            img {
+              width: 18px;
+              height: 18px;
+            }
+
+            &.google:hover {
+              background-color: #f1f1f1;
+              border-color: #c1c1c1;
+            }
+
+            &.facebook {
+              background-color: #1877f2;
+              color: white;
+              border-color: #1877f2;
+
+              &:hover {
+                background-color: darken(#1877f2, 5%);
+              }
+            }
+          }
+        }
+      }
+
+      .register-link {
+        text-align: center;
+        font-size: 0.9rem;
+        color: lighten($dark-color, 20%);
+
+        a {
+          color: $primary-color;
+          text-decoration: none;
+          transition: $transition;
+
+          &:hover {
+            color: $secondary-color;
+            text-decoration: underline;
+          }
+        }
+      }
+    }
+  }
+
+  .login-image {
+    flex: 1;
+    background-color: #f5f7fa;
+    @include flex-center();
+    padding: 2rem;
+    display: none;
+
+    img {
+      max-width: 100%;
+      height: auto;
+      border-radius: $border-radius;
+    }
+  }
+}
+
+// Animations
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+// Responsive Design
+@media (min-width: 768px) {
+  .login-container {
+    .login-card {
+      padding: 3rem;
+    }
+  }
+}
+
+@media (min-width: 992px) {
+  .login-container {
+    .login-image {
+      display: flex;
+    }
+  }
+}
+
+@media (max-width: 576px) {
+  .login-container {
+    .login-card {
+      padding: 1.5rem;
+
+      .social-login {
+        .social-buttons {
+          flex-direction: column;
+          align-items: center;
+
+          .social-button {
+            max-width: 100%;
+            width: 100%;
+          }
+        }
+      }
+    }
+  }
+}

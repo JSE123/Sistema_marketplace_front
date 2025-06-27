@@ -1,0 +1,252 @@
+<app-haeder></app-haeder>
+
+
+<div class="profile-container">
+  <!-- Header del perfil -->
+  <div class="profile-header">
+    <div class="cover-photo" [style.backgroundImage]="'url(' + (user.portadaUrl || 'assets/images/default-cover.jpg') + ')'">
+      <!-- <button class="edit-cover-btn" >d</button> -->
+      <button class="edit-cover-btn" (click)="changeCoverPhoto()">
+        <i class="material-icons">edit</i> Cambiar portada
+      </button>
+    </div>
+    
+    <div class="profile-info">
+      <div class="avatar-container">
+        <img [src]="user.avatarUrl || 'assets/images/default-avatar.jpg'" alt="Avatar" class="profile-avatar">
+        <!-- <button class="edit-avatar-btn" (click)="changeAvatar()"></button> -->
+        <button class="edit-avatar-btn" (click)="changeAvatar()" >
+          <i class="material-icons">photo_camera</i>
+        </button>
+      </div>
+      
+      <div class="user-details">
+        <h1>{{ user.name }} {{ user.lastName }}</h1>
+        <p class="username">{{ user.username }}</p>
+        <p class="member-since">Miembro desde {{ user.createdAt | date:'mediumDate' }}</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- Contenido principal -->
+  <div class="profile-content">
+    <!-- Menú de navegación -->
+    <nav class="profile-nav">
+      <ul>
+        <li [class.active]="activeTab === 'info'" (click)="activeTab = 'info'">Información</li>
+        <li [class.active]="activeTab === 'products'" (click)="activeTab = 'products'">Mis Productos</li>
+        <li [class.active]="activeTab === 'reviews'" (click)="activeTab = 'reviews'">Reseñas</li>
+        <li [class.active]="activeTab === 'settings'" (click)="activeTab = 'settings'">Configuración</li>
+      </ul>
+    </nav>
+
+    <!-- Sección de Información -->
+    <div class="tab-content" *ngIf="activeTab === 'info'">
+      <div class="card">
+        <div class="card-header">
+          <h2>Información Personal</h2>
+          <button class="edit-btn" (click)="editMode.info = !editMode.info">
+            <i class="material-icons">{{ editMode.info ? 'close' : 'edit' }}</i>
+            {{ editMode.info ? 'Cancelar' : 'Editar' }}
+          </button>
+        </div>
+        
+        <form *ngIf="editMode.info; else viewInfo" (ngSubmit)="saveUserInfo()">
+          <div class="form-group">
+            <label>Nombre</label>
+            <input type="text" [(ngModel)]="user.username" name="name" required>
+          </div>
+          
+          <div class="form-group">
+            <label>Apellido</label>
+            <input type="text" [(ngModel)]="user.lastName" name="lastName" required>
+          </div>
+          
+          <div class="form-group">
+            <label>Biografía</label>
+            <textarea [(ngModel)]="user.description" name="bio" rows="3"></textarea>
+          </div>
+          
+          <div class="form-group">
+            <label>Ubicación</label>
+            <input type="text" [(ngModel)]="user.address" name="location">
+          </div>
+          
+          <div class="form-actions">
+            <button type="submit" class="save-btn">Guardar cambios</button>
+          </div>
+        </form>
+        
+        <ng-template #viewInfo>
+          <div class="info-grid">
+            <div class="info-item">
+              <label>Nombre completo</label>
+              <p>{{ user.username }} {{ user.lastName }}</p>
+            </div>
+            
+            <div class="info-item">
+              <label>Biografía</label>
+              <p>{{ user.description|| 'No hay biografía' }}</p>
+            </div>
+            
+            <div class="info-item">
+              <label>Ubicación</label>
+              <p>{{ user.address || 'No especificada' }}</p>
+            </div>
+            
+            <div class="info-item">
+              <label>Correo electrónico</label>
+              <p>{{ user.email }}</p>
+            </div>
+            
+            <div class="info-item">
+              <label>Teléfono</label>
+              <p>{{ user.phone || 'No especificado' }}</p>
+            </div>
+          </div>
+        </ng-template>
+      </div>
+    </div>
+
+    <!-- Sección de Productos -->
+    <!-- <div class="tab-content" *ngIf="activeTab === 'products'">
+      <div class="products-header">
+        <h2>Mis Productos Publicados</h2>
+        <button class="add-product-btn" routerLink="/products/new">
+          <i class="material-icons">add</i> Nuevo Producto
+        </button>
+      </div>
+      
+      <div class="products-grid">
+        <app-product-card 
+          *ngFor="let product of userProducts" 
+          [product]="product"
+          [showActions]="true"
+          (edit)="editProduct(product.id)"
+          (delete)="confirmDeleteProduct(product.id)">
+        </app-product-card>
+        
+        <div class="empty-state" *ngIf="userProducts.length === 0">
+          <img src="assets/images/no-products.svg" alt="No hay productos">
+          <h3>No has publicado ningún producto aún</h3>
+          <p>Comienza a vender en nuestra plataforma publicando tu primer producto</p>
+          <button routerLink="/products/new" class="primary-btn">Publicar producto</button>
+        </div>
+      </div>
+    </div> -->
+
+    <!-- Sección de Reseñas -->
+    <div class="tab-content" *ngIf="activeTab === 'reviews'">
+      <div class="reviews-summary">
+        <div class="rating-overview">
+          <div class="average-rating">
+            <span class="stars">★★★★★</span>
+            <span class="score">{{ averageRating.toFixed(1) }}/5.0</span>
+            <span class="count">({{ reviews.length }} reseñas)</span>
+          </div>
+          
+          <div class="rating-bars">
+            <div class="bar" *ngFor="let i of [5,4,3,2,1]">
+              <span class="star-count">{{i}}★</span>
+              <div class="bar-container">
+                <div class="bar-fill" [style.width.%]="getRatingPercentage(i)"></div>
+              </div>
+              <span class="percentage">{{ getRatingPercentage(i) }}%</span>
+            </div>
+          </div>
+        </div>
+      </div>
+      
+      <div class="reviews-list">
+        <div class="review-card" *ngFor="let review of reviews">
+          <div class="reviewer-info">
+            <img [src]="review.reviewer.avatar" alt="Reviewer" class="reviewer-avatar">
+            <div>
+              <h4>{{ review.reviewer.name }}</h4>
+              <span class="review-date">{{ review.date | date:'dd/MM/yyyy' }}</span>
+              <span class="review-rating">{{ review.rating }}★</span>
+            </div>
+          </div>
+          
+          <div class="review-content">
+            <p>{{ review.comment }}</p>
+          </div>
+        </div>
+        
+        <div class="empty-state" *ngIf="reviews.length === 0">
+          <img src="assets/images/no-reviews.svg" alt="No hay reseñas">
+          <h3>Aún no tienes reseñas</h3>
+          <p>Cuando los usuarios califiquen tus productos, aparecerán aquí</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- Sección de Configuración -->
+    <div class="tab-content" *ngIf="activeTab === 'settings'">
+      <div class="card">
+        <div class="card-header">
+          <h2>Configuración de la cuenta</h2>
+        </div>
+        
+        <form >
+        <!-- <form (ngSubmit)="updateSettings()"> -->
+          <div class="form-group">
+            <label>Notificaciones por correo</label>
+            <mat-slide-toggle [(ngModel)]="userSettings.emailNotifications" name="emailNotifications">
+              {{ userSettings.emailNotifications ? 'Activadas' : 'Desactivadas' }}
+            </mat-slide-toggle>
+          </div>
+          
+          <div class="form-group">
+            <label>Notificaciones push</label>
+            <mat-slide-toggle [(ngModel)]="userSettings.pushNotifications" name="pushNotifications">
+              {{ userSettings.pushNotifications ? 'Activadas' : 'Desactivadas' }}
+            </mat-slide-toggle>
+          </div>
+          
+          <!-- <div class="form-group">
+            <label>Privacidad del perfil</label>
+            <mat-radio-group [(ngModel)]="userSettings.profilePrivacy" name="profilePrivacy">
+              <mat-radio-button value="public">Público</mat-radio-button>
+              <mat-radio-button value="private">Privado</mat-radio-button>
+            </mat-radio-group>
+          </div> -->
+          
+          <div class="form-actions">
+            <button type="submit" class="save-btn">Guardar configuración</button>
+          </div>
+        </form>
+      </div>
+      
+      <div class="card danger-zone">
+        <div class="card-header">
+          <h2>Zona peligrosa</h2>
+        </div>
+        
+        <div class="danger-actions">
+          <div class="action-item">
+            <h3>Desactivar cuenta</h3>
+            <p>Tu cuenta se desactivará temporalmente y no será visible para otros usuarios</p>
+            <!-- <button class="danger-btn" (click)="deactivateAccount()">Desactivar cuenta</button> -->
+            <button class="danger-btn">Desactivar cuenta</button>
+          </div>
+          
+          <div class="action-item">
+            <h3>Eliminar cuenta permanentemente</h3>
+            <p>Esta acción no se puede deshacer. Se perderán todos tus datos.</p>
+            <button class="danger-btn" (click)="confirmDeleteAccount()">Eliminar cuenta</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Modal para confirmar eliminación -->
+<!-- <app-confirmation-modal 
+  *ngIf="showDeleteModal"
+  [title]="'¿Eliminar cuenta?'"
+  [message]="'¿Estás seguro de que deseas eliminar tu cuenta permanentemente? Esta acción no se puede deshacer.'"
+  (confirm)="deleteAccount()"
+  (cancel)="showDeleteModal = false">
+</app-confirmation-modal> -->

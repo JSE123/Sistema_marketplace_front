@@ -1,0 +1,344 @@
+// @use 'src/styles/_variables' as vars;
+
+$primary-color: #4361ee;
+$accent-color: #3f37c9;
+$warn-color: #f72585;
+$light-color: #f8f9fa;
+$dark-color: #212529;
+$success-color: #4cc9f0;
+$error-color: #af0869;
+$border-radius: 8px;
+$box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+$transition: all 0.3s ease;
+
+.product-form-container {
+  max-width: 800px;
+  margin: 2rem auto;
+  padding: 1.5rem;
+  background: white;
+  border-radius: $border-radius;
+  box-shadow:  $box-shadow;
+
+  h2 {
+    font-size: 1.8rem;
+    margin-bottom: 2rem;
+    color: $primary-color;
+    text-align: center;
+  }
+}
+
+.product-form {
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+}
+
+.form-section {
+  padding: 1.5rem;
+  border-radius: $border-radius;
+  background: #f9f9f9;
+  border: 1px solid #eee;
+
+  h3 {
+    font-size: 1.2rem;
+    margin-bottom: 1.5rem;
+    color: $dark-color;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+
+    &::before {
+      content: '';
+      display: block;
+      width: 5px;
+      height: 20px;
+      background: $primary-color;
+      border-radius: 3px;
+    }
+  }
+
+  .section-description {
+    font-size: 0.9rem;
+    color: #666;
+    margin-bottom: 1.5rem;
+  }
+}
+
+.form-group {
+  margin-bottom: 1.5rem;
+
+  label {
+    display: block;
+    margin-bottom: 0.5rem;
+    font-weight: 500;
+    color: $dark-color;
+    font-size: 0.95rem;
+  }
+
+  input[type="text"],
+  input[type="number"],
+  textarea,
+  select {
+    width: 100%;
+    padding: 0.75rem 1rem;
+    border: 1px solid #ddd;
+    border-radius: $border-radius;
+    font-size: 1rem;
+    transition: $transition;
+
+    &:focus {
+      border-color: $primary-color;
+      box-shadow: 0 0 0 2px rgba($primary-color, 0.2);
+      outline: none;
+    }
+
+    &.is-invalid {
+      border-color: $error-color;
+
+      &:focus {
+        box-shadow: 0 0 0 2px rgba($error-color, 0.2);
+      }
+    }
+  }
+
+  textarea {
+    resize: vertical;
+    min-height: 120px;
+  }
+
+  select {
+    appearance: none;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' fill='%23333' viewBox='0 0 16 16'%3E%3Cpath d='M7.247 11.14 2.451 5.658C1.885 5.013 2.345 4 3.204 4h9.592a1 1 0 0 1 .753 1.659l-4.796 5.48a1 1 0 0 1-1.506 0z'/%3E%3C/svg%3E");
+    background-repeat: no-repeat;
+    background-position: right 0.75rem center;
+    background-size: 16px 12px;
+    padding-right: 2.5rem;
+  }
+}
+
+.form-row {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: 1.5rem;
+}
+
+.price-input {
+  position: relative;
+  display: flex;
+  align-items: center;
+
+  .currency-symbol {
+    position: absolute;
+    left: 1rem;
+    font-weight: 500;
+    color: #666;
+  }
+
+  input {
+    padding-left: 2rem !important;
+  }
+}
+
+.checkbox-label {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  cursor: pointer;
+  user-select: none;
+
+  input {
+    width: auto;
+    margin: 0;
+  }
+}
+
+.invalid-feedback {
+  color: $error-color;
+  font-size: 0.85rem;
+  margin-top: 0.25rem;
+}
+
+/* Estilos para la subida de imágenes */
+.image-upload-container {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1rem;
+}
+
+.image-upload-box {
+  width: 150px;
+  height: 150px;
+  border: 2px dashed #ccc;
+  border-radius: $border-radius;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  cursor: pointer;
+  transition: $transition;
+  background: white;
+
+  &:hover {
+    border-color: $primary-color;
+    background: rgba($primary-color, 0.05);
+
+    i, p {
+      color: $primary-color;
+    }
+  }
+
+  i {
+    font-size: 2.5rem;
+    color: #999;
+    margin-bottom: 0.5rem;
+  }
+
+  p {
+    margin: 0;
+    font-size: 0.9rem;
+    color: #666;
+    text-align: center;
+    padding: 0 0.5rem;
+  }
+}
+
+.image-preview-container {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1rem;
+}
+
+.image-preview {
+  width: 150px;
+  height: 150px;
+  border-radius: $border-radius;
+  position: relative;
+  overflow: hidden;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+
+  img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+
+  .remove-image {
+    position: absolute;
+    top: 0.5rem;
+    right: 0.5rem;
+    width: 25px;
+    height: 25px;
+    border-radius: 50%;
+    background: rgba($error-color, 0.8);
+    color: white;
+    border: none;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+    transition: $transition;
+
+    &:hover {
+      background: $error-color;
+    }
+
+    i {
+      font-size: 1rem;
+    }
+  }
+
+  .image-main-badge {
+    position: absolute;
+    bottom: 0.5rem;
+    left: 0.5rem;
+    background: rgba($primary-color, 0.9);
+    color: white;
+    padding: 0.25rem 0.5rem;
+    border-radius: 3px;
+    font-size: 0.7rem;
+    font-weight: 500;
+  }
+
+  .move-image-up {
+    position: absolute;
+    bottom: 0.5rem;
+    right: 0.5rem;
+    width: 25px;
+    height: 25px;
+    border-radius: 50%;
+    background: rgba($dark-color, 0.7);
+    color: white;
+    border: none;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+    transition: $transition;
+
+    &:hover {
+      background: $dark-color;
+    }
+
+    i {
+      font-size: 1rem;
+    }
+  }
+}
+
+/* Botón de enviar */
+.form-actions {
+  margin-top: 1rem;
+  display: flex;
+  justify-content: center;
+
+  .submit-button {
+    background: $primary-color;
+    color: white;
+    border: none;
+    padding: 0.75rem 2rem;
+    border-radius: $border-radius;
+    font-size: 1rem;
+    font-weight: 500;
+    cursor: pointer;
+    transition: $transition;
+    min-width: 200px;
+
+    &:hover {
+      background: $accent-color;
+    }
+
+    &:disabled {
+      background: #ccc;
+      cursor: not-allowed;
+    }
+  }
+}
+
+.spinner {
+  display: inline-block;
+  width: 20px;
+  height: 20px;
+  border: 3px solid rgba(255, 255, 255, 0.3);
+  border-radius: 50%;
+  border-top-color: white;
+  animation: spin 1s ease-in-out infinite;
+}
+
+@keyframes spin {
+  to { transform: rotate(360deg); }
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .product-form-container {
+    padding: 1rem;
+  }
+
+  .form-section {
+    padding: 1rem;
+  }
+
+  .form-row {
+    grid-template-columns: 1fr;
+  }
+}

@@ -1,0 +1,734 @@
+/* Variables definidas directamente en el componente */
+$primary-color: #4361ee;         // Color primario azul
+$accent-color: #3f37c9;         // Color acento azul oscuro
+$light-color: #f8f9fa;          // Color claro
+$dark-color: #212529;           // Color oscuro
+$success-color: #4caf50;        // Color para éxito/confirmaciones
+$error-color: #f44336;          // Color para errores
+$warning-color: #ff9800;        // Color para advertencias
+$border-radius: 8px;            // Radio de borde estándar
+$box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);  // Sombra estándar
+$transition: all 0.3s ease;     // Transición estándar
+
+/* Estructura principal del componente */
+.profile-container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding-bottom: 2rem;
+  
+  .profile-header {
+    position: relative;
+    margin-bottom: 2rem;
+    border-radius: $border-radius;
+    overflow: hidden;
+    box-shadow: $box-shadow;
+    
+    .cover-photo {
+      height: 300px;
+      background-size: cover;
+      background-position: center;
+      position: relative;
+      background-color: #f0f2f5; // Color de fondo mientras carga
+      
+      .edit-cover-btn {
+        position: sticky;
+        bottom: 1rem;
+        left: 1rem;
+        
+        background: rgba(0, 0, 0, 0.7);
+        color: white;
+        border: none;
+        top: 1rem;
+        padding: 0.5rem 1rem;
+        border-radius: $border-radius;
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
+        cursor: pointer;
+        transition: $transition;
+        font-size: 0.9rem;
+        
+        &:hover {
+          background: rgba(0, 0, 0, 0.9);
+        }
+        
+        i {
+          font-size: 1rem;
+        }
+      }
+    }
+    
+    .profile-info {
+      display: flex;
+      align-items: flex-end;
+      padding: 0 2rem;
+      margin-top: -4rem;
+      position: relative;
+      z-index: 2;
+      
+      .avatar-container {
+        position: relative;
+        margin-right: 1.5rem;
+        
+        .profile-avatar {
+          width: 150px;
+          height: 150px;
+          border-radius: 50%;
+          border: 4px solid white;
+          object-fit: cover;
+          box-shadow: $box-shadow;
+          background-color: #e0e0e0; // Color de fondo mientras carga
+        }
+        
+        .edit-avatar-btn {
+          position: absolute;
+          bottom: 10px;
+          right: 10px;
+          background: $primary-color;
+          color: white;
+          width: 36px;
+          height: 36px;
+          border-radius: 50%;
+          border: none;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          cursor: pointer;
+          transition: $transition;
+          
+          &:hover {
+            background: $accent-color;
+            transform: scale(1.1);
+          }
+          
+          i {
+            font-size: 1.2rem;
+          }
+        }
+      }
+      
+      .user-details {
+        padding-bottom: 1rem;
+        
+        h1 {
+          margin: 0;
+          color: $dark-color;
+          font-size: 2rem;
+          font-weight: 600;
+        }
+        
+        .username {
+          margin: 0.25rem 0;
+          color: #666;
+          font-size: 1.1rem;
+        }
+        
+        .member-since {
+          margin: 0;
+          color: #888;
+          font-size: 0.9rem;
+        }
+      }
+    }
+  }
+  
+  /* Contenido del perfil */
+  .profile-content {
+    .profile-nav {
+      border-bottom: 1px solid #eee;
+      margin-bottom: 2rem;
+      
+      ul {
+        list-style: none;
+        padding: 0;
+        margin: 0;
+        display: flex;
+        gap: 1rem;
+        
+        li {
+          padding: 0.75rem 1rem;
+          cursor: pointer;
+          position: relative;
+          color: #666;
+          font-weight: 500;
+          transition: $transition;
+          font-size: 0.95rem;
+          white-space: nowrap;
+          
+          &:hover {
+            color: $primary-color;
+          }
+          
+          &.active {
+            color: $primary-color;
+            font-weight: 600;
+            
+            &::after {
+              content: '';
+              position: absolute;
+              bottom: -1px;
+              left: 0;
+              right: 0;
+              height: 3px;
+              background: $primary-color;
+              border-radius: 3px 3px 0 0;
+            }
+          }
+        }
+      }
+    }
+    
+    /* Estilos para las pestañas */
+    .tab-content {
+      .card {
+        background: white;
+        border-radius: $border-radius;
+        box-shadow: $box-shadow;
+        padding: 1.5rem;
+        margin-bottom: 1.5rem;
+        
+        .card-header {
+          display: flex;
+          justify-content: space-between;
+          align-items: center;
+          margin-bottom: 1.5rem;
+          padding-bottom: 1rem;
+          border-bottom: 1px solid #eee;
+          
+          h2 {
+            margin: 0;
+            font-size: 1.5rem;
+            color: $dark-color;
+            font-weight: 600;
+          }
+          
+          .edit-btn {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            background: none;
+            border: 1px solid #ddd;
+            padding: 0.5rem 1rem;
+            border-radius: $border-radius;
+            cursor: pointer;
+            transition: $transition;
+            font-size: 0.9rem;
+            
+            &:hover {
+              background: #f5f5f5;
+              border-color: #ccc;
+            }
+            
+            i {
+              font-size: 1rem;
+            }
+          }
+        }
+        
+        /* Formularios y cuadros de información */
+        .info-grid {
+          display: grid;
+          grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+          gap: 1.5rem;
+          
+          .info-item {
+            label {
+              display: block;
+              font-weight: 500;
+              color: #666;
+              margin-bottom: 0.25rem;
+              font-size: 0.9rem;
+            }
+            
+            p {
+              margin: 0;
+              color: $dark-color;
+              font-size: 1rem;
+              line-height: 1.5;
+              
+              &:empty::before {
+                content: 'No especificado';
+                color: #999;
+                font-style: italic;
+              }
+            }
+          }
+        }
+        
+        /* Estilos para formularios */
+        form {
+          .form-group {
+            margin-bottom: 1.5rem;
+            
+            label {
+              display: block;
+              font-weight: 500;
+              margin-bottom: 0.5rem;
+              color: #555;
+              font-size: 0.95rem;
+            }
+            
+            input, textarea {
+              width: 100%;
+              padding: 0.75rem;
+              border: 1px solid #ddd;
+              border-radius: $border-radius;
+              font-size: 1rem;
+              transition: $transition;
+              
+              &:focus {
+                outline: none;
+                border-color: $primary-color;
+                box-shadow: 0 0 0 2px rgba($primary-color, 0.1);
+              }
+            }
+            
+            textarea {
+              min-height: 100px;
+              resize: vertical;
+              font-family: inherit;
+            }
+          }
+          
+          .form-actions {
+            display: flex;
+            justify-content: flex-end;
+            margin-top: 1.5rem;
+            
+            .save-btn {
+              background: $primary-color;
+              color: white;
+              border: none;
+              padding: 0.75rem 1.5rem;
+              border-radius: $border-radius;
+              font-weight: 500;
+              cursor: pointer;
+              transition: $transition;
+              font-size: 1rem;
+              
+              &:hover {
+                background: $accent-color;
+              }
+              
+              &:disabled {
+                background: #ccc;
+                cursor: not-allowed;
+              }
+            }
+          }
+        }
+      }
+      
+      /* Estilos específicos para la sección de productos */
+      .products-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 1.5rem;
+        
+        h2 {
+          margin: 0;
+          font-size: 1.5rem;
+          color: $dark-color;
+        }
+        
+        .add-product-btn {
+          display: flex;
+          align-items: center;
+          gap: 0.5rem;
+          background: $primary-color;
+          color: white;
+          border: none;
+          padding: 0.75rem 1.5rem;
+          border-radius: $border-radius;
+          font-weight: 500;
+          cursor: pointer;
+          transition: $transition;
+          font-size: 0.95rem;
+          
+          &:hover {
+            background: $accent-color;
+          }
+          
+          i {
+            font-size: 1.1rem;
+          }
+        }
+      }
+      
+      .products-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+        gap: 1.5rem;
+      }
+      
+      /* Estilos para la sección de reseñas */
+      .reviews-summary {
+        margin-bottom: 2rem;
+        
+        .rating-overview {
+          display: flex;
+          align-items: center;
+          gap: 3rem;
+          
+          .average-rating {
+            text-align: center;
+            
+            .stars {
+              font-size: 2rem;
+              color: #ffc107;
+              letter-spacing: 2px;
+            }
+            
+            .score {
+              display: block;
+              font-size: 2.5rem;
+              font-weight: bold;
+              color: $dark-color;
+              margin: 0.5rem 0;
+            }
+            
+            .count {
+              color: #666;
+              font-size: 0.9rem;
+            }
+          }
+          
+          .rating-bars {
+            flex: 1;
+            
+            .bar {
+              display: flex;
+              align-items: center;
+              margin-bottom: 0.75rem;
+              
+              .star-count {
+                width: 30px;
+                color: #666;
+                font-size: 0.9rem;
+              }
+              
+              .bar-container {
+                flex: 1;
+                height: 10px;
+                background: #eee;
+                border-radius: 5px;
+                margin: 0 1rem;
+                overflow: hidden;
+                
+                .bar-fill {
+                  height: 100%;
+                  background: #ffc107;
+                  transition: width 0.5s ease;
+                }
+              }
+              
+              .percentage {
+                width: 50px;
+                text-align: right;
+                color: #666;
+                font-size: 0.9rem;
+              }
+            }
+          }
+        }
+      }
+      
+      .reviews-list {
+        .review-card {
+          background: white;
+          border-radius: $border-radius;
+          box-shadow: $box-shadow;
+          padding: 1.5rem;
+          margin-bottom: 1rem;
+          transition: $transition;
+          
+          &:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+          }
+          
+          .reviewer-info {
+            display: flex;
+            align-items: center;
+            margin-bottom: 1rem;
+            
+            .reviewer-avatar {
+              width: 50px;
+              height: 50px;
+              border-radius: 50%;
+              object-fit: cover;
+              margin-right: 1rem;
+              background-color: #e0e0e0; // Fondo mientras carga
+            }
+            
+            h4 {
+              margin: 0 0 0.25rem 0;
+              font-size: 1.1rem;
+              color: $dark-color;
+            }
+            
+            .review-date {
+              display: block;
+              font-size: 0.8rem;
+              color: #666;
+              margin-bottom: 0.25rem;
+            }
+            
+            .review-rating {
+              color: #ffc107;
+              font-weight: bold;
+              font-size: 0.9rem;
+            }
+          }
+          
+          .review-content {
+            p {
+              margin: 0;
+              color: $dark-color;
+              line-height: 1.6;
+            }
+          }
+        }
+      }
+      
+      /* Estilos para la zona peligrosa */
+      .danger-zone {
+        border-left: 4px solid $error-color;
+        
+        .danger-actions {
+          .action-item {
+            padding: 1rem 0;
+            border-bottom: 1px solid #eee;
+            
+            &:last-child {
+              border-bottom: none;
+              padding-bottom: 0;
+            }
+            
+            h3 {
+              margin: 0 0 0.5rem 0;
+              color: $dark-color;
+              font-size: 1.1rem;
+            }
+            
+            p {
+              margin: 0 0 1rem 0;
+              color: #666;
+              font-size: 0.9rem;
+              line-height: 1.5;
+            }
+            
+            .danger-btn {
+              background: $error-color;
+              color: white;
+              border: none;
+              padding: 0.5rem 1rem;
+              border-radius: $border-radius;
+              font-weight: 500;
+              cursor: pointer;
+              transition: $transition;
+              font-size: 0.9rem;
+              
+              &:hover {
+                background: darken($error-color, 10%);
+              }
+            }
+          }
+        }
+      }
+    }
+    
+    /* Estilos para estados vacíos */
+    .empty-state {
+      text-align: center;
+      padding: 3rem;
+      background: white;
+      border-radius: $border-radius;
+      box-shadow: $box-shadow;
+      
+      img {
+        max-width: 200px;
+        margin-bottom: 1rem;
+        opacity: 0.7;
+      }
+      
+      h3 {
+        margin: 0 0 0.5rem 0;
+        color: $dark-color;
+        font-size: 1.3rem;
+      }
+      
+      p {
+        margin: 0 0 1.5rem 0;
+        color: #666;
+        font-size: 0.95rem;
+        max-width: 400px;
+        margin-left: auto;
+        margin-right: auto;
+      }
+      
+      .primary-btn {
+        background: $primary-color;
+        color: white;
+        border: none;
+        padding: 0.75rem 1.5rem;
+        border-radius: $border-radius;
+        font-weight: 500;
+        cursor: pointer;
+        transition: $transition;
+        font-size: 1rem;
+        
+        &:hover {
+          background: $accent-color;
+        }
+      }
+    }
+  }
+}
+
+/* Estilos responsivos */
+@media (max-width: 1024px) {
+  .profile-container {
+    padding: 0 1.5rem 2rem;
+    
+    .profile-header {
+      .profile-info {
+        padding: 0 1.5rem;
+      }
+    }
+  }
+}
+
+@media (max-width: 768px) {
+  .profile-container {
+    padding: 0 1rem 2rem;
+    
+    .profile-header {
+      .cover-photo {
+        height: 250px;
+      }
+      
+      .profile-info {
+        flex-direction: column;
+        align-items: flex-start;
+        margin-top: -2rem;
+        
+        .avatar-container {
+          margin-right: 0;
+          margin-bottom: 1rem;
+          
+          .profile-avatar {
+            width: 120px;
+            height: 120px;
+          }
+        }
+      }
+    }
+    
+    .profile-content {
+      .profile-nav {
+        ul {
+          overflow-x: auto;
+          padding-bottom: 0.5rem;
+          
+          li {
+            padding: 0.75rem;
+            font-size: 0.9rem;
+          }
+        }
+      }
+      
+      .tab-content {
+        .card {
+          padding: 1.25rem;
+          
+          .info-grid {
+            grid-template-columns: 1fr;
+          }
+        }
+        
+        .products-header {
+          flex-direction: column;
+          align-items: flex-start;
+          gap: 1rem;
+          
+          .add-product-btn {
+            width: 100%;
+            justify-content: center;
+          }
+        }
+        
+        .reviews-summary {
+          .rating-overview {
+            flex-direction: column;
+            gap: 1.5rem;
+            align-items: flex-start;
+          }
+        }
+      }
+    }
+  }
+}
+
+@media (max-width: 480px) {
+  .profile-container {
+    .profile-header {
+      .cover-photo {
+        height: 200px;
+        
+        .edit-cover-btn {
+          bottom: 0.5rem;
+          right: 0.5rem;
+          padding: 0.5rem;
+          font-size: 0;
+          
+          i {
+            font-size: 1rem;
+            margin: 0;
+          }
+        }
+      }
+      
+      .profile-info {
+        padding: 0 1rem;
+        
+        .avatar-container {
+          .profile-avatar {
+            width: 100px;
+            height: 100px;
+          }
+          
+          .edit-avatar-btn {
+            width: 30px;
+            height: 30px;
+            bottom: 5px;
+            right: 5px;
+            
+            i {
+              font-size: 1rem;
+            }
+          }
+        }
+        
+        .user-details {
+          h1 {
+            font-size: 1.5rem;
+          }
+          
+          .username {
+            font-size: 1rem;
+          }
+        }
+      }
+    }
+    
+    .profile-content {
+      .tab-content {
+        .card {
+          padding: 1rem;
+        }
+      }
+    }
+  }
+}

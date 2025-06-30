@@ -49,7 +49,7 @@ export class ProductService {
 
   // Método completo para guardar producto con imágenes
   createProductWithImages(productData: any, images: File[]): Observable<any> {
-    console.log('Datos del producto:', productData);
+    // console.log('Datos del producto:', productData);
     return this.saveProduct(productData).pipe(
       switchMap((response: any) => {
         const productId = response.id;

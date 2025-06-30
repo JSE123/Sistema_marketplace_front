@@ -1,0 +1,28 @@
+import { HttpClient } from '@angular/common/http';
+import { inject, Injectable } from '@angular/core';
+import { Observable } from 'rxjs';
+
+@Injectable({
+  providedIn: 'root'
+})
+export class SalesProductService {
+  // URL de la API de ventas
+  private apiUrl = 'http://localhost:8080/api/sales/';
+
+  // Inyectar HttpClient para realizar peticiones HTTP
+  private _http = inject(HttpClient);
+
+  constructor() { }
+
+  //Funcion para registrar una venta y decrementar el stock del producto
+  /**
+   * Registra una venta y decremente el stock del producto.
+   * @param saleData Datos de la venta a registrar.
+   * @returns Observable con la respuesta de la API.
+   */
+  registerSale(saleData: any): Observable<any> {
+
+    return this._http.post<any>(this.apiUrl, saleData);
+
+  }
+}

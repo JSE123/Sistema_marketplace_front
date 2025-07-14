@@ -25,4 +25,14 @@ export class SalesProductService {
     return this._http.post<any>(this.apiUrl, saleData);
 
   }
+
+  //Funcion para obtener las ventas de un usuario
+  /**
+   * Obtiene las ventas de un usuario.
+   * @param userId ID del usuario cuyas ventas se desean obtener.
+   * @returns Observable con la lista de ventas del usuario.
+   */
+  getUserSales(userId: string): Observable<any[]> {
+    return this._http.get<any[]>(`${this.apiUrl}${userId}/get-by-user`);
+  }
 }

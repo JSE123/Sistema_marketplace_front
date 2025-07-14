@@ -14,10 +14,10 @@
       <div class="stat-value">{{totalProducts}}</div>
       <div class="stat-label">Productos Totales</div>
     </div>
-    <div class="stat-card">
+    <!-- <div class="stat-card">
       <div class="stat-value">{{activeProducts}}</div>
       <div class="stat-label">Activos</div>
-    </div>
+    </div> -->
     <div class="stat-card">
       <div class="stat-value">{{soldProducts}}</div>
       <div class="stat-label">Vendidos</div>
@@ -39,10 +39,10 @@
       <label for="status-filter">Estado:</label>
       <select id="status-filter" [(ngModel)]="statusFilter" (change)="applyFilters()">
         <option value="all">Todos</option>
-        <option value="active">Activos</option>
-        <option value="inactive">Inactivos</option>
-        <option value="sold">Vendidos</option>
-        <option value="draft">Borradores</option>
+        <!-- <option value="active">Activos</option>
+        <option value="inactive">Inactivos</option> -->
+        <option value="USADO">Usado</option>
+        <option value="NUEVO">Nuevo</option>
       </select>
     </div>
 
@@ -53,7 +53,7 @@
         <option value="oldest">Más antiguos</option>
         <option value="price-high">Mayor precio</option>
         <option value="price-low">Menor precio</option>
-        <option value="popular">Más vendidos</option>
+        <!-- <option value="popular">Más vendidos</option> -->
       </select>
     </div>
   </div>

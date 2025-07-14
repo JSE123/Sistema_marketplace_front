@@ -1,0 +1,115 @@
+<app-haeder></app-haeder>
+<div class="messages-container" [class.mobile-view]="isMobileView">
+  <!-- Panel de conversaciones -->
+  <div class="conversations-panel" [class.hidden]="selectedConversation && isMobileView">
+    <div class="panel-header">
+      <h2>Mensajes</h2>
+      <div class="header-actions">
+        
+        <button mat-icon-button [matMenuTriggerFor]="menu">
+          <!-- <fa-icon [icon]="icons.menu"></fa-icon> -->
+           <mat-icon>menu</mat-icon>
+        </button>
+        <mat-menu #menu="matMenu">
+          <button mat-menu-item>Marcar todos como leídos</button>
+          <button mat-menu-item>Configuración</button>
+        </mat-menu>
+      </div>
+    </div>
+
+    <div class="search-container">
+      <mat-form-field appearance="outline">
+        <mat-label>Buscar conversaciones</mat-label>
+        <input matInput [(ngModel)]="searchTerm" (input)="searchConversations()">
+        <mat-icon matSuffix>search</mat-icon>
+      </mat-form-field>
+    </div>
+
+  
+
+    <mat-nav-list class="conversation-list">
+      <mat-list-item
+        *ngFor="let conversation of conversations" 
+        (click)="selectConversation(conversation)"
+        [class.active]="selectedConversation?.id === conversation.id">
+         <div class="mat-mdc-list-item-unscoped-content">
+           
+           <img matListAvatar [src]="conversation.messages[0].senderId == currentUser.id ? conversation.messages[0].recipientAvatar || 'images/logo_usuario.png': conversation.messages[0].senderAvatar || 'images/logo_usuario.png'" alt="Foto de perfil">
+           <!-- <div> -->
+             <div matLine class="conversation-summary">
+               <span class="participant-name" >{{conversation.messages[0].senderId == currentUser.id ? conversation.messages[0].recipientName || conversation.messages[0].recipientUsername : conversation.messages[0].senderName || conversation.messages[0].senderUsername}}</span>
+               <span class="last-message">{{ conversation.messages[conversation.messages.length-1].content}}</span>
+               <!-- <span class="last-message">{{ conversation.lastMessage.text | truncate:30 }}</span> -->
+             </div>
+             <div matLine class="conversation-meta">
+               <span class="timestamp">{{ conversation.messages[conversation.messages.length-1].timestamp | date }}</span>
+               <!-- <span class="timestamp">{{  conversation.messages[conversation.messages.length-1].content  }}</span> -->
+               <span *ngIf="conversation.unreadCount > 0" class="unread-count">
+                 {{ conversation.unreadCount }}
+               </span>
+             <!-- </div> -->
+           </div>
+         </div>
+      </mat-list-item>
+    </mat-nav-list>
+  </div>
+
+  <!-- Panel de chat -->
+  <div class="chat-panel" *ngIf="selectedConversation" [class.full-width]="!conversationsPanelVisible">
+    <div class="chat-header">
+      <button *ngIf="isMobileView" mat-icon-button (click)="closeConversation()">
+        <mat-icon>close</mat-icon>
+      </button>
+      <img [src]="selectedConversation.messages[0].senderId == currentUser.id ? selectedConversation.messages[0].recipientAvatar || 'images/logo_usuario.png': selectedConversation.messages[0].senderAvatar || 'images/logo_usuario.png'" alt="Foto de perfil">
+      <div class="chat-partner-info">
+        <h3>{{ selectedConversation.messages[0].senderId == currentUser.id ? selectedConversation.messages[0].recipientName || selectedConversation.messages[0].recipientUsername : selectedConversation.messages[0].senderName || selectedConversation.messages[0].senderUsername }}</h3>
+      </div>
+      <div class="chat-actions">
+        <button mat-icon-button [matMenuTriggerFor]="chatMenu">
+          <mat-icon>more_vert</mat-icon>
+        </button>
+        <mat-menu #chatMenu="matMenu">
+          <button mat-menu-item>Ver perfil</button>
+        </mat-menu>
+      </div>
+    </div>
+
+    <div class="messages-container">
+      <div *ngFor="let message of selectedConversation.messages" 
+           class="message" 
+           [class.sent]="message.senderId === currentUser.id"
+           [class.received]="message.senderId !== currentUser.id">
+        <div class="message-content">
+          <p>{{ message.content}}</p>
+          <div class="message-meta">
+            <span class="timestamp">{{ message.timestamp | date:'shortTime' }}</span>
+            <span *ngIf="message.senderId === currentUser.id" class="status">
+            </span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="message-input-container">
+      <mat-form-field appearance="outline">
+        <textarea matInput 
+                 [(ngModel)]="newMessage" 
+                 placeholder="Escribe un mensaje..."
+                 (keydown.enter)="sendMessage()"></textarea>
+      </mat-form-field>
+      <button mat-icon-button (click)="sendMessage()" [disabled]="!newMessage.trim()">
+         <mat-icon>send</mat-icon>
+
+      </button>
+    </div>
+  </div>
+
+  <!-- Vista cuando no hay conversación seleccionada -->
+  <div *ngIf="!selectedConversation && !isMobileView" class="empty-state">
+    <!-- <fa-icon [icon]="icons.comment" size="3x"></fa-icon> -->
+    <!-- <mat-icon>chat</mat-icon> -->
+    <mat-icon>forum</mat-icon>
+    <h3>Selecciona una conversación</h3>
+    <p>O inicia una nueva conversación con un vendedor/comprador</p>
+  </div>
+</div>

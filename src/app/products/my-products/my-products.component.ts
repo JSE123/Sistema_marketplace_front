@@ -6,6 +6,7 @@ import { ProductService } from '../service/product-service.service';
 import { AuthService } from '../../auth/service/auth.service';
 import { Router, RouterModule } from '@angular/router';
 import { query } from '@angular/animations';
+import { SalesProductService } from '../service/sales-product.service';
 
 @Component({
   selector: 'app-my-products',
@@ -45,7 +46,9 @@ export class MyProductsComponent {
   constructor(
     private productService: ProductService,
     private authService: AuthService,
-    private router: Router
+    private router: Router,
+    private _SalesProductService: SalesProductService
+
   ) { }
   
   ngOnInit(): void {
@@ -53,6 +56,22 @@ export class MyProductsComponent {
     if (this.userId) {
       this.loadProducts();
     }
+    // Obtener las ventas del usuario
+    this.getSalesByUserId();
+  }
+
+  getSalesByUserId(): void {
+    this._SalesProductService.getUserSales(this.userId!).subscribe({
+      next: (sales) => {
+        // Calcular cantidad de ventas y ganancias totales
+        this.soldProducts = sales.length
+        this.totalEarnings = sales.reduce((sum, sale) => sum + sale.total, 0);
+        console.log('Ventas del usuario:', sales);
+      },
+      error: (err) => {
+        console.error('Error al obtener las ventas del usuario:', err);
+      }
+    });
   }
   
   loadProducts(): void {
@@ -81,7 +100,6 @@ export class MyProductsComponent {
   applyFilters(): void {
     // Aplicar filtro de búsqueda
     let filtered = this.allProducts;
-    // console.log("filtered", filtered);
     if (this.searchQuery) {
       const query = this.searchQuery.toLowerCase();
       filtered = filtered.filter(p => 
@@ -89,6 +107,7 @@ export class MyProductsComponent {
         p.description.toLowerCase().includes(query)
       );
     }
+    console.log('Productos filtrados por búsqueda:', this.filteredProducts);
     
     // Aplicar filtro de estado
     if (this.statusFilter !== 'all') {

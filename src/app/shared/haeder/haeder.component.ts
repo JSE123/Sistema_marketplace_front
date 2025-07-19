@@ -17,6 +17,7 @@ export class HaederComponent {
   showUserMenu = false;
   isAuthenticated = false;
   currentUser: any = null;
+  currentUserId: string | null = null;
   private _authService = inject(AuthService);
   searchTerm = '';
 
@@ -44,6 +45,7 @@ export class HaederComponent {
     );
 
     this.currentUser = this._authService.getUsername();
+    this.currentUserId = this._authService.getCurrentUserId();
     console.log("currentUser", this.currentUser);
 
   }

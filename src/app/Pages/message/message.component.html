@@ -74,12 +74,12 @@
       </div>
     </div>
 
-    <div class="messages-container">
+    <div class="messages-container" >
       <div *ngFor="let message of selectedConversation.messages" 
            class="message" 
            [class.sent]="message.senderId === currentUser.id"
            [class.received]="message.senderId !== currentUser.id">
-        <div class="message-content">
+        <div class="message-content" *ngIf="this.selectedConversation.messages[0].content != ''">
           <p>{{ message.content}}</p>
           <div class="message-meta">
             <span class="timestamp">{{ message.timestamp | date:'shortTime' }}</span>

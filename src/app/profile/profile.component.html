@@ -6,7 +6,7 @@
   <div class="profile-header">
     <div class="cover-photo" [style.backgroundImage]="'url(' + (user.portadaUrl || 'assets/images/default-cover.jpg') + ')'">
       <!-- <button class="edit-cover-btn" >d</button> -->
-      <button class="edit-cover-btn" (click)="changeCoverPhoto()">
+      <button *ngIf="editProfile" class="edit-cover-btn" (click)="changeCoverPhoto()">
         <i class="material-icons">edit</i> Cambiar portada
       </button>
     </div>
@@ -15,7 +15,7 @@
       <div class="avatar-container">
         <img [src]="user.avatarUrl || 'assets/images/default-avatar.jpg'" alt="Avatar" class="profile-avatar">
         <!-- <button class="edit-avatar-btn" (click)="changeAvatar()"></button> -->
-        <button class="edit-avatar-btn" (click)="changeAvatar()" >
+        <button *ngIf="editProfile" class="edit-avatar-btn" (click)="changeAvatar()" >
           <i class="material-icons">photo_camera</i>
         </button>
       </div>
@@ -34,9 +34,9 @@
     <nav class="profile-nav">
       <ul>
         <li [class.active]="activeTab === 'info'" (click)="activeTab = 'info'">Información</li>
-        <li [class.active]="activeTab === 'products'" (click)="activeTab = 'products'">Mis Productos</li>
+        <li *ngIf="editProfile" [class.active]="activeTab === 'products'" (click)="activeTab = 'products'">Mis Productos</li>
         <li [class.active]="activeTab === 'reviews'" (click)="activeTab = 'reviews'">Reseñas</li>
-        <li [class.active]="activeTab === 'settings'" (click)="activeTab = 'settings'">Configuración</li>
+        <li *ngIf="editProfile" [class.active]="activeTab === 'settings'" (click)="activeTab = 'settings'">Configuración</li>
       </ul>
     </nav>
 
@@ -45,7 +45,7 @@
       <div class="card">
         <div class="card-header">
           <h2>Información Personal</h2>
-          <button class="edit-btn" (click)="editMode.info = !editMode.info">
+          <button *ngIf="editProfile" class="edit-btn" (click)="editMode.info = !editMode.info">
             <i class="material-icons">{{ editMode.info ? 'close' : 'edit' }}</i>
             {{ editMode.info ? 'Cancelar' : 'Editar' }}
           </button>

@@ -63,15 +63,103 @@
     </div>
   </div>
 
+  <!-- Sección de Valoraciones y Comentarios -->
+  <div class="product-ratings-section">
+    <h2>Valoraciones y comentarios</h2>
+    
+    <!-- Resumen de valoraciones -->
+    <div class="ratings-summary">
+      <div class="overall-rating">
+        <span class="average">{{product?.averageRating | number:'1.1-1'}}</span>
+        <div class="stars">
+          <i class="material-icons" *ngFor="let star of [1,2,3,4,5]">
+            {{star <= (product?.averageRating || 0) ? 'star' : 'star_border'}}
+          </i>
+        </div>
+        <!-- <span class="total-ratings">{{product?.totalRatings}} valoraciones</span> -->
+      </div>
+      
+      <div class="rating-bars">
+        <div class="rating-bar" *ngFor="let i of [5,4,3,2,1]; let idx = index">
+          <span class="stars">
+            <i class="material-icons">star</i> {{i}}
+          </span>
+          <div class="bar-container">
+            <!-- <div class="bar" [style.width.%]="getRatingPercentage(i)"></div> -->
+          </div>
+          <!-- <span class="count">{{product?.ratingCounts[i-1] || 0}}</span> -->
+        </div>
+      </div>
+    </div>
+
+    <!-- Lista de valoraciones -->
+    <div class="reviews-list">
+      <div class="review" *ngFor="let review of product?.comments">
+        <div class="review-header">
+          <img [src]="review.raterUserAvatar || 'images/logo_usuario.png'" alt="Avatar" class="review-avatar">
+          <div class="review-user">
+            <span class="review-name">{{review.userName}}</span>
+            <div class="review-rating">
+              <i class="material-icons" *ngFor="let star of [1,2,3,4,5]">
+                {{star <= review.rating ? 'star' : 'star_border'}}
+              </i>
+            </div>
+          </div>
+          <!-- <span class="review-date">{{review.date | date:'mediumDate'}}</span> -->
+        </div>
+        
+        <div class="review-content">
+          <p class="review-text">{{review.comment}}</p>
+          
+         
+        </div>
+        
+     
+      </div>
+    </div>
+
+    <!-- Formulario para nueva valoración -->
+    <div class="new-review" *ngIf="isAuthenticated">
+      <h3>Deja tu valoración</h3>
+      <form [formGroup]="commentForm" (ngSubmit)="submitComment()">
+        <div class="rating-input">
+          <span>Tu valoración:</span>
+          <div class="stars">
+            <i class="material-icons" 
+              *ngFor="let star of [1,2,3,4,5]; let i = index"
+              (click)="setRating(star)"
+              [class.filled]="star <= (commentForm.get('rating')?.value || 0)">
+              {{star <= (commentForm.get('rating')?.value || 0) ? 'star' : 'star_border'}}
+            </i>
+          </div>
+        </div>
+        
+        
+        <div class="form-group">
+          <textarea formControlName="comment" placeholder="Escribe tu comentario" rows="4"></textarea>
+        </div>
+        
+        <div class="form-actions">
+          <button type="submit" class="btn submit-review" [disabled]="commentForm.invalid">
+            Enviar valoración
+          </button>
+          <button type="button" class="btn contact-seller" (click)="startNewConversation()">
+            <i class="material-icons">mail</i>
+            Contactar al vendedor
+          </button>
+        </div>
+      </form>
+    </div>
+    
+    <div class="login-prompt" *ngIf="!isAuthenticated">
+      <p>Inicia sesión para dejar tu valoración o comentario</p>
+      <button class="btn login-btn" (click)="navigateToLogin()">Iniciar sesión</button>
+    </div>
+  </div>
+
   <div class="related-products">
     <h2>Productos relacionados</h2>
     <div class="products-grid">
-      <!-- <app-product-card 
-        *ngFor="let product of relatedProducts" 
-        [product]="product"
-        (click)="viewProductDetails(product.id)"> -->
-
-      <!-- </app-product-card> -->
       <div class="product-card"  *ngFor="let product of relatedProducts">
         <!-- <div class="product-badge" *ngIf="product.discount">-{{product.discount}}%</div> -->
         <div class="product-image" >
@@ -105,4 +193,8 @@
 
     </div>
   </div>
+
+  
+
+
 </div>

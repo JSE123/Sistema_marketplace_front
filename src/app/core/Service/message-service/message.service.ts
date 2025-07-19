@@ -1,12 +1,23 @@
 import { HttpClient } from '@angular/common/http';
 import { inject, Injectable } from '@angular/core';
-import { Observable, Subject } from 'rxjs';
+import { BehaviorSubject, Observable, Subject } from 'rxjs';
 import { AuthService } from '../../../auth/service/auth.service';
 
 @Injectable({
   providedIn: 'root'
 })
 export class MessageService {
+
+  private newConversationSubject = new BehaviorSubject<{ recipientId?: number} | null>(null);
+  newConversation$ = this.newConversationSubject.asObservable();
+
+  startNewConversation( recipientId: number) {
+    this.newConversationSubject.next({ recipientId });
+  }
+
+  clearNewConversation() {
+    this.newConversationSubject.next(null);
+  }
 
   // Api url
   private apiUrl = 'http://localhost:8080/api/messages';

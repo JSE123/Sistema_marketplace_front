@@ -4,6 +4,7 @@ import { AuthService } from '../auth/service/auth.service';
 import { ProfileServiceService } from './service/profile-service.service';
 import { CommonModule } from '@angular/common';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { ActivatedRoute } from '@angular/router';
 
 @Component({
   selector: 'app-profile',
@@ -21,7 +22,11 @@ export class ProfileComponent {
   };
   showDeleteModal = false;
 
+  // bandera de edición
+  editProfile = false;
+
   user: any = {}
+  idUserProfile: string | null = null;
 
   // Productos del usuario
   userProducts = [
@@ -64,17 +69,27 @@ export class ProfileComponent {
     private profileService: ProfileServiceService,
     private authService: AuthService,
     // private cloudinaryService: CloudinaryService
+    private route: ActivatedRoute,
+    
   ) {}
 
   ngOnInit(): void {
+   
+    // this.loadReviews();
+
+    //verifar id del usuario que se quiere ver el perfil
+    const currentUserId = this.authService.getCurrentUserId();
+    this.idUserProfile = this.route.snapshot.paramMap.get('id');
+    if(currentUserId == this.idUserProfile) {
+      this.editProfile = true;
+    }
     this.loadUserData();
     this.loadUserProducts();
-    // this.loadReviews();
 
   }
 
   loadUserData(): void {
-    this.profileService.getUserProfile(this.authService.getCurrentUserId()!).subscribe({
+    this.profileService.getUserProfile(this.idUserProfile!).subscribe({
       next: (data) => {
         this.user = data ;
         console.log('Datos del perfil:', this.user);

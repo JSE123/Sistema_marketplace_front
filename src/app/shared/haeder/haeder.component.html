@@ -56,7 +56,7 @@
           </button>
           
           <div class="dropdown-menu" [class.show]="showUserMenu">
-            <a routerLink="/profile" class="dropdown-item">
+            <a [routerLink]="'/profile/'+currentUserId" class="dropdown-item">
               <i class="material-icons">person</i>
               <span>Mi perfil</span>
             </a>

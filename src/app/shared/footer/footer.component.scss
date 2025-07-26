@@ -1,0 +1,148 @@
+.marketplace-footer {
+  background-color: #2c3e50;
+  color: #ecf0f1;
+  padding: 40px 0 0;
+  font-family: 'Arial', sans-serif;
+
+  .footer-container {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 20px;
+  }
+
+  .footer-section {
+    flex: 1;
+    min-width: 200px;
+    margin-bottom: 30px;
+    padding: 0 15px;
+
+    h4 {
+      color: #f39c12;
+      margin-bottom: 20px;
+      font-size: 18px;
+    }
+  }
+
+  .footer-logo img {
+    max-width: 150px;
+    margin-bottom: 15px;
+  }
+
+  .footer-description {
+    margin-bottom: 20px;
+    line-height: 1.6;
+  }
+
+  .social-icons {
+    display: flex;
+    gap: 15px;
+
+    .social-icon {
+      color: #ecf0f1;
+      background: #34495e;
+      width: 35px;
+      height: 35px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: all 0.3s ease;
+
+      &:hover {
+        background: #f39c12;
+        transform: translateY(-3px);
+      }
+    }
+  }
+
+  .footer-links {
+    list-style: none;
+    padding: 0;
+
+    li {
+      margin-bottom: 10px;
+
+      a {
+        color: #bdc3c7;
+        text-decoration: none;
+        transition: color 0.3s;
+
+        &:hover {
+          color: #f39c12;
+        }
+      }
+    }
+  }
+
+  .footer-contact {
+    list-style: none;
+    padding: 0;
+
+    li {
+      margin-bottom: 15px;
+      display: flex;
+      align-items: center;
+
+      i {
+        margin-right: 10px;
+        color: #f39c12;
+        width: 20px;
+        text-align: center;
+      }
+    }
+  }
+
+  .footer-bottom {
+    background-color: #1a252f;
+    padding: 20px 0;
+    text-align: center;
+
+    .container {
+      max-width: 1200px;
+      margin: 0 auto;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 0 20px;
+    }
+
+    p {
+      margin: 0;
+      color: #bdc3c7;
+      font-size: 14px;
+    }
+
+    .payment-methods {
+      i {
+        font-size: 24px;
+        margin-left: 15px;
+        color: #bdc3c7;
+      }
+    }
+  }
+}
+
+@media (max-width: 768px) {
+  .marketplace-footer {
+    .footer-container {
+      flex-direction: column;
+    }
+
+    .footer-section {
+      margin-bottom: 30px;
+    }
+
+    .footer-bottom {
+      .container {
+        flex-direction: column;
+
+        .payment-methods {
+          margin-top: 15px;
+        }
+      }
+    }
+  }
+}

@@ -10,11 +10,12 @@ import { SalesProductService } from '../service/sales-product.service';
 import { AuthService } from '../../auth/service/auth.service';
 import { MessageService } from '../../core/Service/message-service/message.service';
 import { RatingService } from '../../core/Service/rating-service/rating.service';
+import { FooterComponent } from "../../shared/footer/footer.component";
 
 @Component({
   selector: 'app-product-details',
   standalone: true,
-  imports: [CommonModule, RouterModule, ReactiveFormsModule, HaederComponent, FormsModule],
+  imports: [CommonModule, RouterModule, ReactiveFormsModule, HaederComponent, FormsModule, FooterComponent],
   templateUrl: './product-details.component.html',
   styleUrl: './product-details.component.scss'
 })

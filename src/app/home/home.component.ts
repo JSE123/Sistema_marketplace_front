@@ -8,11 +8,12 @@ import { ProductService } from '../products/service/product-service.service';
 import { TokenService } from '../core/Service/token.service';
 import { CategoryService } from '../core/Service/category-service/category.service';
 import { FormsModule } from '@angular/forms';
+import { FooterComponent } from "../shared/footer/footer.component";
 
 @Component({
   selector: 'app-home',
   standalone: true,
-  imports: [CommonModule, MatIconModule, RouterModule, HaederComponent, FormsModule],
+  imports: [CommonModule, MatIconModule, RouterModule, HaederComponent, FormsModule, FooterComponent],
   templateUrl: './home.component.html',
   styleUrl: './home.component.scss'
 })

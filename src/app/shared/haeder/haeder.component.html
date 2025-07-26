@@ -83,11 +83,27 @@
             </a>
           </div>
         </div>
-        
-        <button class="notification-button" *ngIf="isAuthenticated">
-          <i class="material-icons">notifications</i>
-          <span class="notification-badge">3</span>
-        </button>
+
+        <!-- Botón de notificaciones -->
+        <div class="notification-menu" *ngIf="isAuthenticated">
+          <button class="notification-button" *ngIf="isAuthenticated" (click)="toggleNotificationMenu()">
+            <i class="material-icons">notifications</i>
+            <span *ngIf="notificationCount > 0" class="notification-badge">{{notificationCount}}</span>
+            <!-- <i class="material-icons">arrow_drop_down</i> -->
+
+          </button>
+
+          <div class="notification-dropdown" *ngIf="isAuthenticated" [class.show]="showNotificationMenu">
+            <h3>Notificaciones</h3>
+            <ul class="notification-list">
+              <div *ngFor="let notification of notificationList" class="notification-item">
+                <span>{{notification.content}}</span>
+                <span class="notification-time">{{notification.createdAt | date:'short'}}</span>
+              </div>
+            </ul>
+          </div>
+
+        </div>
 
          <!-- Estado cuando el usuario NO está autenticado -->
         <ng-template #loginSection>

@@ -353,6 +353,195 @@ $transition: all 0.3s ease;
       }
     }
   }
+  /* Sección de Vendedores Destacados */
+  .featured-sellers {
+    padding: 3rem 0;
+    background-color: #f9f9f9;
+    
+    .section-title {
+      text-align: center;
+      margin-bottom: 2.5rem;
+      
+      h2 {
+        font-size: 2rem;
+        color: #333;
+        margin-bottom: 0.5rem;
+        position: relative;
+        display: inline-block;
+        
+        &::after {
+          content: '';
+          position: absolute;
+          width: 50%;
+          height: 3px;
+          background: linear-gradient(to right, #ff7b00, #ff0058);
+          bottom: -10px;
+          left: 25%;
+        }
+      }
+      
+      p {
+        color: #666;
+        font-size: 1rem;
+      }
+    }
+
+    .sellers-container {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+      gap: 2rem;
+      padding: 0 1.5rem;
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+
+    .seller-card {
+      background: white;
+      border-radius: 10px;
+      overflow: hidden;
+      box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+      
+      &:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 10px 25px rgba(0, 0, 0, 0.15);
+      }
+
+      .seller-header {
+        position: relative;
+        height: 120px;
+        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        
+        .seller-avatar {
+          position: absolute;
+          width: 80px;
+          height: 80px;
+          border-radius: 50%;
+          border: 4px solid white;
+          background-color: #fff;
+          bottom: -40px;
+          left: 50%;
+          transform: translateX(-50%);
+          overflow: hidden;
+          
+          img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+          }
+        }
+      }
+
+      .seller-body {
+        padding: 50px 1.5rem 1.5rem;
+        text-align: center;
+        
+        .seller-name {
+          font-size: 1.25rem;
+          font-weight: 600;
+          color: #333;
+          margin-bottom: 0.5rem;
+        }
+        
+        .seller-category {
+          display: inline-block;
+          background-color: #f0f0f0;
+          color: #666;
+          padding: 0.25rem 0.75rem;
+          border-radius: 20px;
+          font-size: 0.8rem;
+          margin-bottom: 1rem;
+        }
+        
+        .seller-rating {
+          color: #ffc107;
+          font-size: 1rem;
+          margin-bottom: 1rem;
+          
+          .rating-count {
+            color: #666;
+            font-size: 0.8rem;
+            margin-left: 0.3rem;
+          }
+        }
+        
+        .seller-stats {
+          display: flex;
+          justify-content: space-around;
+          margin-top: 1.5rem;
+          padding-top: 1.5rem;
+          border-top: 1px solid #eee;
+          
+          .stat {
+            text-align: center;
+            
+            .stat-value {
+              font-size: 1.1rem;
+              font-weight: 600;
+              color: #333;
+            }
+            
+            .stat-label {
+              font-size: 0.7rem;
+              color: #666;
+              text-transform: uppercase;
+              letter-spacing: 1px;
+            }
+          }
+        }
+      }
+
+      .seller-footer {
+        padding: 1rem;
+        text-align: center;
+        
+        .view-profile-btn {
+          display: inline-block;
+          padding: 0.5rem 1.5rem;
+          background-color: transparent;
+          color: #667eea;
+          border: 1px solid #667eea;
+          border-radius: 30px;
+          font-size: 0.9rem;
+          font-weight: 500;
+          transition: all 0.3s ease;
+          cursor: pointer;
+          
+          &:hover {
+            background-color: #667eea;
+            color: white;
+            transform: translateY(-2px);
+          }
+        }
+      }
+    }
+
+    .view-all-sellers {
+      text-align: center;
+      margin-top: 3rem;
+      
+      a {
+        display: inline-block;
+        padding: 0.75rem 2rem;
+        background: linear-gradient(to right, #ff7b00, #ff0058);
+        color: white;
+        border-radius: 30px;
+        font-weight: 500;
+        text-decoration: none;
+        box-shadow: 0 4px 15px rgba(255, 0, 88, 0.3);
+        transition: all 0.3s ease;
+        
+        &:hover {
+          transform: translateY(-3px);
+          box-shadow: 0 7px 20px rgba(255, 0, 88, 0.4);
+        }
+      }
+    }
+  }
+
+///////////////////////////////////////////////////
+
+
 
   /* Responsive Design */
   @media (max-width: 768px) {
@@ -419,4 +608,6 @@ $transition: all 0.3s ease;
       }
     }
   }
+
+
 }

@@ -107,21 +107,10 @@ export class MessageComponent implements OnDestroy {
       this.conversations = conversations;
       this.unreadCount = conversations.filter(c => c.unreadCount > 0).length;
     }),
-    map(() => void 0) // Convertir a Observable<void>
-  );
-}
-  // private loadConversations(): Observable<void> {
-  //   // console.log("id de usuario actual:", this.currentUser.id);
-  //   this.messagingService.getConversations(this.currentUser.id).subscribe({
-  //     next: (conversations) => {
-  //       conversations.sort((a, b) => new Date(b.messages[b.messages.length-1].timestamp).getTime() - new Date(a.messages[a.messages.length-1].timestamp).getTime());
-        
-  //       this.conversations = conversations;
-  //       this.unreadCount = conversations.filter(c => c.unreadCount > 0).length;
-  //     },
-  //     error: (err) => console.error('Error loading conversations', err)
-  //   });
-  // }
+      map(() => void 0) // Convertir a Observable<void>
+    );
+  }
+ 
 
   initializeNewConversation() {
     if (this.recipientId) {

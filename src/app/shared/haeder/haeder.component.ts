@@ -56,8 +56,7 @@ export class HaederComponent {
     this.currentUserId = this._authService.getCurrentUserId();
 
     this.loadNotifications();
-    console.log('Current User:', this.currentUserId);    this._notificationService.getNotificationsByUserId(this.currentUserId!).subscribe((notifications) => {
-      console.log('Notificaciones del usuario:', notifications);
+    this._notificationService.getNotificationsByUserId(this.currentUserId!).subscribe((notifications) => {
       this.notificationList = notifications;
        // Count notifications unread
       this.notificationCount = this.notificationList.filter(n => !n.read).length;

@@ -76,37 +76,48 @@
       </div>
     </section>
   
-    <!-- Vendedores destacados -->
     <section class="featured-sellers">
-      <h2 class="section-title">Vendedores destacados</h2>
-      <div class="sellers-grid">
+      <div class="section-title">
+        <h2>Vendedores Destacados</h2>
+        <p>Conoce a nuestros mejores vendedores calificados por la comunidad</p>
+      </div>
+      
+      <div class="sellers-container">
+        <!-- Tarjeta de vendedor 1 -->
         <div class="seller-card" *ngFor="let seller of featuredSellers">
-          <div class="seller-avatar">
-            <img [src]="seller.avatar" [alt]="seller.name">
-          </div>
-          <div class="seller-info">
-            <h3>{{seller.name}}</h3>
-            <div class="seller-rating">
-              <i class="material-icons">star</i>
-              <span>{{seller.rating}}</span>
+          <div class="seller-header">
+            <div class="seller-avatar">
+              <img [src]="seller.avatarUrl" alt="Vendedor 1">
             </div>
-            <p class="seller-category">{{seller.category}}</p>
           </div>
-          <button class="follow-button">Seguir</button>
+          <div class="seller-body">
+            <h3 class="seller-name">{{seller.name}}</h3>
+            <!-- <span class="seller-category">Moda y Accesorios</span> -->
+            <div class="seller-rating">
+              ★★★★☆ <span class="rating-count">{{seller.rating}}</span>
+            </div>
+            <div class="seller-stats">
+              <div class="stat">
+                <div class="stat-value">95%</div>
+                <div class="stat-label">Rating</div>
+              </div>
+              <div class="stat">
+                <div class="stat-value">1.2k</div>
+                <div class="stat-label">Ventas</div>
+              </div>
+              <div class="stat">
+                <div class="stat-value">2</div>
+                <div class="stat-label">Años</div>
+              </div>
+            </div>
+          </div>
+          <div class="seller-footer">
+            <button class="view-profile-btn" (click)="navigateToProfile(seller.id)">Ver Perfil</button>
+          </div>
         </div>
       </div>
     </section>
   
-    <!-- CTA Newsletter -->
-    <!-- <section class="newsletter">
-      <div class="newsletter-content">
-        <h2>Suscríbete a nuestro boletín</h2>
-        <p>Recibe ofertas exclusivas y novedades directamente en tu correo</p>
-        <div class="newsletter-form">
-          <input type="email" placeholder="Tu correo electrónico">
-          <button type="submit">Suscribirse</button>
-        </div>
-      </div>
-    </section> -->
+   
   </div>
 <app-footer></app-footer>

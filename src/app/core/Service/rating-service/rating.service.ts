@@ -25,4 +25,9 @@ export class RatingService {
   createReputation(reputation: any): Observable<any> {
     return this._http.post(this.apiUrl, reputation);
   }
+
+  // Método para obtener los venderores mas valorados
+  getTopRatedSellers(): Observable<any> {
+    return this._http.get(`${this.apiUrl}/featured-sellers`);
+  }
 }

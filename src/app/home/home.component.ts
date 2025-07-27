@@ -9,6 +9,7 @@ import { TokenService } from '../core/Service/token.service';
 import { CategoryService } from '../core/Service/category-service/category.service';
 import { FormsModule } from '@angular/forms';
 import { FooterComponent } from "../shared/footer/footer.component";
+import { RatingService } from '../core/Service/rating-service/rating.service';
 
 @Component({
   selector: 'app-home',
@@ -24,10 +25,13 @@ export class HomeComponent {
   private _router = inject(Router);
   private _categoryService = inject(CategoryService);
   private _route = inject(ActivatedRoute);
+  private _ratingService = inject(RatingService);
 
   listaProductos: Product[] = [];
   categories: any[] = []; // 
   searchTerm: string = '';
+  featuredSellers: any[]  = []; 
+
 
 
   categoryImages: { [key: string]: string } = {
@@ -60,6 +64,10 @@ export class HomeComponent {
     
     // Llamar a la función para desplazarse a la sección de categorías
     this.scrollToCategoris();
+
+    this.loadTopRatedSellers();
+
+
   }
 
   scrollToCategoris(): void{
@@ -94,32 +102,32 @@ export class HomeComponent {
   }
   
 
-  featuredSellers = [
-    {
-      name: 'TechGadgets',
-      avatar: 'assets/images/sellers/seller1.jpg',
-      rating: 4.8,
-      category: 'Electrónica'
-    },
-    {
-      name: 'FashionHub',
-      avatar: 'assets/images/sellers/seller2.jpg',
-      rating: 4.6,
-      category: 'Moda'
-    },
-    {
-      name: 'HomeEssentials',
-      avatar: 'assets/images/sellers/seller3.jpg',
-      rating: 4.9,
-      category: 'Hogar'
-    } 
-  ];
 
   goToProductDetails(productId: number): void {
     // Navegar a la página de detalles del producto
     this._router.navigate(['product', productId]);
 
   }
+
+  loadTopRatedSellers(){
+    this._ratingService.getTopRatedSellers().subscribe(
+      (data) => {
+        this.featuredSellers = data;
+        console.log('Vendedores destacados:', this.featuredSellers);
+      },
+      (error) => {
+        console.error('Error al cargar los vendedores destacados:', error);
+      }
+    );
+
+  };
+
+  navigateToProfile(id: string): void {
+    // Navegar a la página de perfil del usuario
+    this._router.navigate(['/profile', (id)]);
+  }
+
+
 
  
 }

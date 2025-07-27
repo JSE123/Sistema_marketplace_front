@@ -5,6 +5,7 @@ import { ProfileServiceService } from './service/profile-service.service';
 import { CommonModule } from '@angular/common';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
+import { Observable } from 'rxjs';
 
 @Component({
   selector: 'app-profile',
@@ -43,20 +44,8 @@ export class ProfileComponent {
   ];
 
   // Reseñas
-  reviews = [
-    {
-      id: '1',
-      reviewer: {
-        name: 'María González',
-        avatar: 'assets/images/avatar2.jpg'
-      },
-      rating: 5,
-      comment: 'Excelente producto, llegó en perfecto estado y antes de lo esperado.',
-      date: new Date('2023-01-15')
-    },
-    // ... más reseñas
-  ];
-  averageRating = 4.7;
+  reviews: any[] = [];
+  averageRating = 0;
 
   // Configuración
   userSettings = {
@@ -85,6 +74,7 @@ export class ProfileComponent {
     }
     this.loadUserData();
     this.loadUserProducts();
+    this.loadUserAssessment(this.idUserProfile!);
 
   }
 
@@ -92,7 +82,6 @@ export class ProfileComponent {
     this.profileService.getUserProfile(this.idUserProfile!).subscribe({
       next: (data) => {
         this.user = data ;
-        console.log('Datos del perfil:', this.user);
       },
       error: (err) => {
         // this.showError('Error al cargar los datos del perfil');
@@ -113,17 +102,19 @@ export class ProfileComponent {
     });
   }
 
-  // loadReviews(): void {
-  //   this.profileService.getUserReviews().subscribe({
-  //     next: (reviews) => {
-  //       this.reviews = reviews;
-  //       this.calculateAverageRating();
-  //     },
-  //     error: (err) => {
-  //       this.showError('Error al cargar las reseñas');
-  //     }
-  //   });
-  // }
+  loadUserAssessment(userId: string): void {
+    this.profileService.getUserAssessment(userId).subscribe({
+      next: (assessment) => {
+        this.reviews = assessment.reputations;
+        this.averageRating = assessment.averageRating;
+        console.log('Evaluación del usuario:', this.reviews);
+      },
+      error: (err) => {
+        console.error('Error al cargar la evaluación del usuario', err);
+        // this.showError('Error al cargar la evaluación del usuario');
+      }
+    });
+  }
 
   calculateAverageRating(): void {
     if (this.reviews.length === 0) {
@@ -258,5 +249,7 @@ export class ProfileComponent {
   //     }
   //   });
   // }
+
+  
 
 }

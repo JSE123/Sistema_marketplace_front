@@ -160,10 +160,10 @@
       <div class="reviews-list">
         <div class="review-card" *ngFor="let review of reviews">
           <div class="reviewer-info">
-            <img [src]="review.reviewer.avatar" alt="Reviewer" class="reviewer-avatar">
+            <img [src]="review.raterUserAvatar" alt="Reviewer" class="reviewer-avatar">
             <div>
-              <h4>{{ review.reviewer.name }}</h4>
-              <span class="review-date">{{ review.date | date:'dd/MM/yyyy' }}</span>
+              <h4>{{ review.raterUserName || review.raterUserUsername }}</h4>
+              <!-- <span class="review-date">{{ review.date | date:'dd/MM/yyyy' }}</span> -->
               <span class="review-rating">{{ review.rating }}★</span>
             </div>
           </div>
@@ -174,7 +174,7 @@
         </div>
         
         <div class="empty-state" *ngIf="reviews.length === 0">
-          <img src="assets/images/no-reviews.svg" alt="No hay reseñas">
+          <!-- <img src="images/no_comments_yet.png" alt="No hay reseñas"> -->
           <h3>Aún no tienes reseñas</h3>
           <p>Cuando los usuarios califiquen tus productos, aparecerán aquí</p>
         </div>

@@ -53,4 +53,9 @@ export class ProfileServiceService {
     formData.append('image', avatar);
     return this.http.post(`${this.apiUrl}${this.authService.getCurrentUserId()}/avatar`, formData);
   }
+
+  getUserAssessment(userId: string): Observable<any> {
+    
+    return this.http.get(`http://localhost:8080/api/reputation/user-assessment/${userId}`);
+  }
 }

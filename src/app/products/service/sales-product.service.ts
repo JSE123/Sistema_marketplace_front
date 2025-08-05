@@ -1,13 +1,14 @@
 import { HttpClient } from '@angular/common/http';
 import { inject, Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
+import { environment } from '../../../enviroment/enviroment';
 
 @Injectable({
   providedIn: 'root'
 })
 export class SalesProductService {
   // URL de la API de ventas
-  private apiUrl = 'http://localhost:8080/api/sales/';
+  private apiUrl = `${environment.apiUrl}/api/sales/`;
 
   // Inyectar HttpClient para realizar peticiones HTTP
   private _http = inject(HttpClient);

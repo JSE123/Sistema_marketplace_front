@@ -2,6 +2,7 @@ import { HttpClient } from '@angular/common/http';
 import { inject, Injectable } from '@angular/core';
 import { BehaviorSubject, Observable, Subject } from 'rxjs';
 import { AuthService } from '../../../auth/service/auth.service';
+import { environment } from '../../../../enviroment/enviroment';
 
 @Injectable({
   providedIn: 'root'
@@ -20,7 +21,7 @@ export class MessageService {
   }
 
   // Api url
-  private apiUrl = 'http://localhost:8080/api/messages';
+  private apiUrl = `${environment.apiUrl}/api/messages`; 
 
   // Inyeccion de dependencias
   private http: HttpClient = inject(HttpClient);

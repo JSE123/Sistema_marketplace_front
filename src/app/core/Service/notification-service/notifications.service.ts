@@ -3,6 +3,7 @@ import { Client, IMessage, Stomp } from '@stomp/stompjs';
 import SockJS from 'sockjs-client/dist/sockjs'; 
 import { Observable, Subject } from 'rxjs';
 import { HttpClient } from '@angular/common/http';
+import { environment } from '../../../../enviroment/enviroment';
 
 @Injectable({
   providedIn: 'root'
@@ -14,7 +15,7 @@ export class NotificationsService {
   private _http = inject(HttpClient);
 
   // Api url
-  private apiUrl = 'http://localhost:8080/api/notifications';
+  private apiUrl = `${environment.apiUrl}/api/notifications`; 
 
 
 //   constructor() { }

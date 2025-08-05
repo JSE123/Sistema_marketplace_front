@@ -15,8 +15,8 @@
           id="username" 
           formControlName="username" 
           placeholder="username"
-          [ngClass]="{ 'is-invalid': submitted && f['username'].errors }"
-          [(ngModel)]="loginRequest.username">
+          [ngClass]="{ 'is-invalid': submitted && f['username'].errors }">
+          <!-- [(ngModel)]="loginRequest.username -->
         <div *ngIf="submitted && f['username'].errors" class="invalid-feedback">
           <div *ngIf="f['username'].errors['required']">Username es requerido</div>
           <div *ngIf="f['username'].errors['username']">Nombre de usuario no es válido</div>
@@ -79,8 +79,7 @@
     </form>
   </div>
 
-  <div class="login-image">
+  <!-- <div class="login-image">
     <img src="images/imagen.jpg" alt="Marketplace">
-    <!-- <img src="assets/marketplace-login.jpg" alt="Marketplace"> -->
-  </div>
+  </div> -->
 </div>

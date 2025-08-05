@@ -56,6 +56,8 @@ export class RegisterComponent {
     }
 
     this.loading = true;
+    this.registroRequest.username = this.registerForm.get('username')?.value;
+    this.registroRequest.password = this.registerForm.get('password')?.value;
     this._authService.register(this.registroRequest).subscribe({
       next: (response) => {
         console.log("response: ",response)

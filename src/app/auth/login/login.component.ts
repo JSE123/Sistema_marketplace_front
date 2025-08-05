@@ -34,16 +34,42 @@ export class LoginComponent {
   }
 
   ngOnInit() {
-    //Verificar si existe un token y redirigir al usuario a la página principal si ya está autenticado
-    // if (this._tokenService.existsToken()) {
-    //   this._router.navigate(['']);
-    // }
+    this.form.get('username')?.valueChanges.subscribe(() => {
+      const errors = this.form.get('username')?.errors;
+      if (errors && errors['incorrect']) {
+        delete errors['incorrect'];
+        this.form.get('username')?.setErrors(Object.keys(errors).length ? errors : null);
+      }
+
+      const pwErrors = this.form.get('password')?.errors;
+      if (pwErrors && pwErrors['incorrect']) {
+        delete pwErrors['incorrect'];
+        this.form.get('password')?.setErrors(Object.keys(pwErrors).length ? pwErrors : null);
+      }
+    });
+
+    this.form.get('password')?.valueChanges.subscribe(() => {
+      const errors = this.form.get('username')?.errors;
+      if (errors && errors['incorrect']) {
+        delete errors['incorrect'];
+        this.form.get('username')?.setErrors(Object.keys(errors).length ? errors : null);
+      }
+
+      const pwErrors = this.form.get('password')?.errors;
+      if (pwErrors && pwErrors['incorrect']) {
+        delete pwErrors['incorrect'];
+        this.form.get('password')?.setErrors(Object.keys(pwErrors).length ? pwErrors : null);
+      }
+    });
   }
+
+  
+
   get f() { return this.form.controls; }
   onSubmit() {
     this.submitted = true;
 
-
+    console.log("form: ", this.form.value);
 
     if (this.form.valid) {
       this._authService.login(this.form.value).subscribe({
@@ -56,11 +82,12 @@ export class LoginComponent {
           }
         },
         error: (err) => {
-          if(err.status == 401){
-            console.log("Usuario o contraseña incorrecta")
+
+          // if(err.status == 401){
+            console.log("Usuario o contraseña incorrecta", err)
             this.form.get('username')?.setErrors({ incorrect: true });
             this.form.get('password')?.setErrors({ incorrect: true });
-          }
+          // }
         },
       });
     }else{

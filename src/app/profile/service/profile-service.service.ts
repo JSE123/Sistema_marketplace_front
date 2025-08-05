@@ -2,6 +2,7 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { AuthService } from '../../auth/service/auth.service';
+import { environment } from '../../../enviroment/enviroment';
 
 @Injectable({
   providedIn: 'root'
@@ -10,12 +11,12 @@ export class ProfileServiceService {
 
 
   //  private apiUrl = `${environment.apiUrl}/profile`;
-  private apiUrl = 'http://localhost:8080/api/users/'; 
+  private apiUrl = `${environment.apiUrl}/api/users`;
 
   constructor(private http: HttpClient, private authService: AuthService) {}
 
   getUserProfile(id: string): Observable<any> {
-    return this.http.get(`${this.apiUrl}${id}`);
+    return this.http.get(`${this.apiUrl}/${id}`);
   }
 
   getUserProducts(): Observable<any[]> {

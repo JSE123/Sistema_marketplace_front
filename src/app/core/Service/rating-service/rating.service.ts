@@ -1,6 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { inject, Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
+import { environment } from '../../../../enviroment/enviroment';
 
 @Injectable({
   providedIn: 'root'
@@ -8,7 +9,7 @@ import { Observable } from 'rxjs';
 export class RatingService {
 
   // Url de la API
-  private apiUrl = 'http://localhost:8080/api/reputation';
+  private apiUrl = `${environment.apiUrl}/api/reputation`;  
   // Inyección de HttpClient
   private _http = inject(HttpClient);
 

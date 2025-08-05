@@ -2,6 +2,7 @@ import { HttpClient } from '@angular/common/http';
 import { inject, Injectable } from '@angular/core';
 import { map, Observable } from 'rxjs';
 import { AuthService } from '../../../auth/service/auth.service';
+import { environment } from '../../../../enviroment/enviroment';
 
 @Injectable({
   providedIn: 'root'
@@ -9,7 +10,7 @@ import { AuthService } from '../../../auth/service/auth.service';
 export class UserService {
 
   //url de la API de usuarios
-  private url: string = 'http://localhost:8080/api/users';
+  private url = `${environment.apiUrl}/api/users`;
   // inyeccion de http client
   private _http: HttpClient = inject(HttpClient);
 
